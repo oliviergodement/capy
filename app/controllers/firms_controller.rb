@@ -1,10 +1,12 @@
 class FirmsController < ApplicationController
+
+  before_action :find_firm, only: [:show, :create, :edit, :update, :destroy]
+
   def index
     @firms = Firm.all
   end
 
   def show
-    @firm = Firm.find(params[:id])
   end
 
   def new
@@ -12,23 +14,20 @@ class FirmsController < ApplicationController
   end
 
   def create
-    @firm = Firm.new(firm_params)
     @firm.save
     redirect_to @firm
   end
 
   def edit
-    @firm = Firm.find(params[:id])
   end
 
   def update
-    @firm = Firm.find(params[:id])
     @firm.update(firm_params)
     redirect_to @firm
   end
 
   def destroy
-    Firm.find(params[:id]).destroy
+    @firm.destroy
     redirect_to firms_path
   end
 
@@ -38,6 +37,10 @@ class FirmsController < ApplicationController
       params.require(:firm).permit(:name, :official_address, :rcs, :court_service,
              :bank_name, :bank_agency, :bank_agency_address, :bank_account, :valuation,
              :share_price, :initial_capital, :shares)
+    end
+
+    def find_firm
+      @firm = Firm.find(params[:id])
     end
 
 end

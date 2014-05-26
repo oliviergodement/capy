@@ -9,7 +9,7 @@
   <% @firms.each do |firm| %>
     <tr>
       <td><%=link_to firm.name, firm_path(firm)%></td>
-      <td><%=firm.updated_at.strftime("%d/%m/%Y (%H:%M)")  %></td>
+      <td><%=firm.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
       <td><%=link_to "Editer les détails", edit_firm_path(firm)%></td>
       <td><%= link_to "Supprimer la société", firm_path(firm), method: 'delete'%></td>
     </tr>
