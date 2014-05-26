@@ -28,6 +28,8 @@ class FirmsController < ApplicationController
   end
 
   def destroy
+    Firm.find(params[:id]).destroy
+    redirect_to firms_path
   end
 
   private
