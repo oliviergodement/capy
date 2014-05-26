@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount_raised: 9.99
+  ownership_offered: 9.99
+  name: MyText
+  firm_id: 
+
+two:
+  amount_raised: 9.99
+  ownership_offered: 9.99
+  name: MyText
+  firm_id: 

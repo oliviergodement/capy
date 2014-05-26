@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  initial_capital: 9.99
+  shares: 1
+  valuation: 9.99
+  official_address: MyText
+  rcs: MyText
+  court_service: MyText
+  bank_name: MyText
+  bank_agency: MyText
+  bank_agency_address: MyText
+  bank_account: MyText
+  share_price: 9.99
+
+two:
+  name: MyText
+  initial_capital: 9.99
+  shares: 1
+  valuation: 9.99
+  official_address: MyText
+  rcs: MyText
+  court_service: MyText
+  bank_name: MyText
+  bank_agency: MyText
+  bank_agency_address: MyText
+  bank_account: MyText
+  share_price: 9.99

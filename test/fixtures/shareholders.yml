@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: MyText
+  last_name: MyText
+  birth_date: 2014-05-26
+  address: MyString
+  nationality: MyString
+  founder: false
+  ownership: 9.99
+  shares: 1
+  initial_ownership: 9.99
+  firm_id: 
+
+two:
+  first_name: MyText
+  last_name: MyText
+  birth_date: 2014-05-26
+  address: MyString
+  nationality: MyString
+  founder: false
+  ownership: 9.99
+  shares: 1
+  initial_ownership: 9.99
+  firm_id: 
