@@ -1,2 +1,5 @@
-<h1>Firms#show</h1>
-<p>Find me in app/views/firms/show.html.erb</p>
+<h1>Société '<%= @firm.name %>'</h1>
+
+Capital social initial: <%= @firm.initial_capital.to_s %> €
+
+Nombre d'actions: <%= @firm.shares %>

@@ -1,0 +1,26 @@
+<%= form_for @firm do |f| %>
+  <h2>1. Informations de la société</h2>
+  <%= f.label :name, "Nom de la société" %>
+  <%= f.text_field :name %>
+  <%= f.label :official_address, "Siège social" %>
+  <%= f.text_field :official_address %>
+  <%= f.label :rcs, "RCS" %>
+  <%= f.text_field :rcs %>
+  <%= f.label :court_service, "Greffe du" %>
+  <%= f.text_field :court_service %>
+  <%= f.label :initial_capital, "Capital social (pré-levée)" %>
+  <%= f.text_field :initial_capital %>
+  <%= f.label :shares, "Nombre d'actions (pré-levée)" %>
+  <%= f.text_field :shares %>
+
+  <h2>2. Informations bancaires</h2>
+  <%= f.label :bank_name, "Nom de la banque" %>
+  <%= f.text_field :bank_name %>
+  <%= f.label :bank_agency, "Nom de l'agence bancaire" %>
+  <%= f.text_field :bank_agency %>
+  <%= f.label :bank_agency_address, "Adresse de l'agence" %>
+  <%= f.text_field :bank_agency_address %>
+  <%= f.label :bank_account, "Numéro de compte de la société" %>
+  <%= f.text_field :bank_account %>
+  <%= f.submit %>
+<% end %>

@@ -10,7 +10,7 @@
     <tr>
       <td><%=firm.name%></td>
       <td><%=firm.updated_at.strftime("%d/%m/%Y (%H:%M)")  %></td>
-      <td><%=link_to "Editer les détails", new_firm_path(firm)%></td>
+      <td><%=link_to "Editer les détails", edit_firm_path(firm)%></td>
     </tr>
   <% end %>
 </table>
