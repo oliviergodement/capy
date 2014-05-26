@@ -1,6 +1,6 @@
 class FirmsController < ApplicationController
 
-  before_action :find_firm, only: [:show, :create, :edit, :update, :destroy]
+  before_action :find_firm, only: [:show, :create, :edit, :update, :destroy, :shareholders]
 
   def index
     @firms = Firm.all
@@ -15,7 +15,7 @@ class FirmsController < ApplicationController
 
   def create
     @firm.save
-    redirect_to @firm
+    redirect_to add_shareholder(@firm)
   end
 
   def edit
@@ -29,6 +29,13 @@ class FirmsController < ApplicationController
   def destroy
     @firm.destroy
     redirect_to firms_path
+  end
+
+  def shareholders
+    @shareholder = Shareholder.new
+  end
+
+  def create_shareholder
   end
 
   private
