@@ -1,0 +1,16 @@
+<h1>Liste des sociétés</h1>
+
+<%= link_to "Ajouter une société", new_firm_path %>
+
+<table>
+  <th>Société</th>
+  <th>Dernière édition</th>
+  <th></th>
+  <% @firms.each do |firm| %>
+    <tr>
+      <td><%=firm.name%></td>
+      <td><%=firm.updated_at.strftime("%d/%m/%Y (%H:%M)")  %></td>
+      <td><%=link_to "Editer les détails", new_firm_path(firm)%></td>
+    </tr>
+  <% end %>
+</table>
