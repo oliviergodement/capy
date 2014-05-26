@@ -11,16 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526152203) do
+ActiveRecord::Schema.define(version: 20140526160544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "firms", force: true do |t|
     t.text     "name"
-    t.decimal  "initial_capital"
     t.integer  "shares"
-    t.decimal  "valuation"
     t.text     "official_address"
     t.text     "rcs"
     t.text     "court_service"
@@ -28,10 +26,15 @@ ActiveRecord::Schema.define(version: 20140526152203) do
     t.text     "bank_agency"
     t.text     "bank_agency_address"
     t.text     "bank_account"
-    t.decimal  "share_price"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.decimal  "valuation",           precision: 10, scale: 3
+    t.decimal  "share_price",         precision: 10, scale: 3
+    t.decimal  "initial_capital",     precision: 10, scale: 3
   end
+
+  add_index "firms", ["user_id"], name: "index_firms_on_user_id", using: :btree
 
   create_table "investments", force: true do |t|
     t.float    "amount"
@@ -74,12 +77,9 @@ ActiveRecord::Schema.define(version: 20140526152203) do
   add_index "shareholders", ["firm_id"], name: "index_shareholders_on_firm_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.boolean  "admin"
-    t.integer  "firms_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "admin",      default: false
   end
-
-  add_index "users", ["firms_id"], name: "index_users_on_firms_id", using: :btree
 
 end
