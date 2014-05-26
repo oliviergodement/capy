@@ -1,9 +1,8 @@
 <h1>Ajouter les actionnaires initiaux (pré-levée) de la société <%=@firm.name%></h1>
 
 
-<%= button_to 'Ajouter un actionnaire', "#", class: "add-shareholder" %>
-<div class="new-shareholder" style="display:none">
+<div class="new-shareholder">
     <%= render 'newshareholder' %>
 </div>
 
-<%= render 'showshareholders' %>
+<div id="shareholders"></div>

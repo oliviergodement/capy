@@ -5,13 +5,13 @@
   <th>Adresse</th>
   <th>Date de naissance</th>
   <th>Nationalité</th>
-<%= @firm.shareholders.each do |shareholder| %>
+<% @firm.shareholders.each do |shareholder| %>
   <tr>
-    <td>shareholder.first_name</td>
-    <td>shareholder.last_name</td>
-    <td>shareholder.address</td>
-    <td>shareholder.birth_date</td>
-    <td>shareholder.nationality</td>
+    <td><%=shareholder.first_name%></td>
+    <td><%=shareholder.last_name%></td>
+    <td><%=shareholder.address%></td>
+    <td><%=shareholder.birth_date%></td>
+    <td><%=shareholder.nationality%></td>
   </tr>
 <%end%>
 </table>

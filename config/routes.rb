@@ -1,17 +1,13 @@
 Rails.application.routes.draw do
 
 
-  get 'shareholders/show'
-
-  get 'shareholders/edit'
-
-  get 'shareholders/update'
-
-  get 'shareholders/destroy'
 
   root 'home#index'
   resources :firms
+  resources :shareholders
+
   get 'firms/:id/shareholders' => 'firms#shareholders', as: :add_shareholders
+  post 'firms/:id/shareholders' => 'firms#create_shareholder', as: :create_shareholder
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

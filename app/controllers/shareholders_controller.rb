@@ -1,12 +1,4 @@
 class ShareholdersController < ApplicationController
-
-  def new_pre
-  end
-
-  def new_post
-    @shareholder = Shareholder.new
-  end
-
   def create
   end
 
