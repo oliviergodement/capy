@@ -1,6 +1,6 @@
 <h1>Société '<%= @firm.name %>'</h1>
 
-Capital social initial: <%= @firm.initial_capital.to_s %> €
+Capital social initial: <strong><%= @firm.initial_capital.to_s %></strong> €
 <table>
   <th>Prénom</th>
   <th>Nom</th>
@@ -13,3 +13,6 @@ Capital social initial: <%= @firm.initial_capital.to_s %> €
     </tr>
   <% end %>
 </table>
+
+<strong><%=@firm.shares%></strong> actions en circulation
+à une valeur nominale de <strong><%=@firm.share_price.to_s%> €</strong>

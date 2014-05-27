@@ -1,6 +1,6 @@
 class FirmsController < ApplicationController
 
-  before_action :find_firm, only: [:show, :edit, :update, :destroy, :shareholders, :create_shareholder, :ownership, :udpate_ownership]
+  before_action :find_firm, only: [:show, :edit, :update, :destroy, :shareholders, :create_shareholder, :ownership, :udpate_ownership, :refresh_financial_infos]
   respond_to :js, :html
 
   def index
@@ -9,6 +9,7 @@ class FirmsController < ApplicationController
 
   def show
     @shareholders = @firm.shareholders
+    @shares = @shareholders.sum("shares")
   end
 
   def new
@@ -43,7 +44,14 @@ class FirmsController < ApplicationController
       @shareholder = Shareholder.find(id.to_i)
       @shareholder.update_attributes(set_shares(id))
     end
+    refresh_financial_infos
     redirect_to firm_path
+  end
+
+  def refresh_financial_infos
+    @firm = Firm.find(params[:id])
+    @firm.update_attribute(:shares, @firm.shareholders.sum("shares"))
+    @firm.update_attribute(:share_price, @firm.initial_capital/@firm.shares)
   end
 
   private
