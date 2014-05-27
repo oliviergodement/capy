@@ -1,6 +1,28 @@
 <h1>Société '<%= @firm.name %>'</h1>
 
-Capital social initial: <strong><%= @firm.initial_capital.to_s %></strong> €
+<%=link_to "Editer les détails de la société", edit_firm_path(@firm)%>
+
+<table>
+    <tr>
+      <td>Adresse</td>
+      <td><%=@firm.official_address%></td>
+    </tr>
+    <tr>
+      <td>Numéro RCS</td>
+      <td><%=@firm.rcs%></td>
+    </tr>
+    <tr>
+      <td>Banque</td>
+      <td><%=@firm.bank_name%> (agence <%=@firm.bank_agency%>)</td>
+      <td><%=@firm.bank_agency_address%></td>
+    </tr>
+    <tr>
+      <td>Numéro de compte</td>
+      <td><%=@bank_account%></td>
+    </tr>
+</table>
+
+
 <table>
   <th>Prénom</th>
   <th>Nom</th>
@@ -14,5 +36,7 @@ Capital social initial: <strong><%= @firm.initial_capital.to_s %></strong> €
   <% end %>
 </table>
 
-<strong><%=@firm.shares%></strong> actions en circulation
-à une valeur nominale de <strong><%=@firm.nominal_value.to_s%> €</strong>
+<h4>Capital social initial: <strong><%= @firm.initial_capital.to_s %></strong> €</h4>
+
+<h4><strong><%=@firm.shares%></strong> actions en circulation</h4>
+<h4>Valeur nominale de <strong><%=@firm.nominal_value.to_s%> €</strong></h4>

@@ -1,10 +1,5 @@
 <%= form_for @firm do |f| %>
 
-  <% flash.each do |name, msg| %>
-    <div class ="alert alert-<%=name%>"><%= content_tag :div, msg %></div>
-  <% end %>
-  <%=fdlmkqjsflkmqdjs%>
-
   <h2>1. Informations de la société</h2>
   <%= f.label :name, "Nom de la société" %>
   <%= f.text_field :name %>
