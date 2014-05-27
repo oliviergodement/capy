@@ -1,5 +1,15 @@
 <h1>Société '<%= @firm.name %>'</h1>
 
 Capital social initial: <%= @firm.initial_capital.to_s %> €
-
-Nombre d'actions: <%= @firm.shares %>
+<table>
+  <th>Prénom</th>
+  <th>Nom</th>
+  <th>Nombre d'actions</th>
+  <% @shareholders.each do |shareholder| %>
+    <tr>
+      <td><%= shareholder.first_name %></td>
+      <td><%= shareholder.last_name %></td>
+      <td><%= shareholder.shares %></td>
+    </tr>
+  <% end %>
+</table>

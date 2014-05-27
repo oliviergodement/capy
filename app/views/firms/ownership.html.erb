@@ -1,0 +1,21 @@
+<h1>Déterminer les parts des actionnaires de <%= @firm.name %> (pré-levée)</h1>
+
+<%= form_for :shareholder, url: update_ownership_path, method: 'post' do |f| %>
+<table>
+  <th>Prénom</th>
+  <th>Nom</th>
+  <th>Nombre d'actions</th>
+    <% @firm.shareholders.each do |shareholder| %>
+      <tr>
+        <td><%= shareholder.first_name %></td>
+        <td><%= shareholder.last_name %></td>
+        <td>
+          <%= fields_for "shareholder[]", shareholder do |share_f| %>
+            <%= share_f.number_field :shares %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+  <%= f.submit %>
+<% end %>
+</table>
