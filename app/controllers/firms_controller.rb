@@ -18,8 +18,13 @@ class FirmsController < ApplicationController
 
   def create
     @firm = Firm.new(firm_params)
-    @firm.save
-    redirect_to add_shareholders_path(@firm)
+    if @firm.valid?
+      @firm.save
+      redirect_to add_shareholders_path(@firm)
+    else
+     flash[:error] = @firm.errors.full_messages
+     render :new
+   end
   end
 
   def edit
