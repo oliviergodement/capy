@@ -1,6 +1,6 @@
 class FirmsController < ApplicationController
 
-  before_action :find_firm, only: [:show, :edit, :update, :destroy, :shareholders, :create_shareholder]
+  before_action :find_firm, only: [:show, :edit, :update, :destroy, :shareholders, :create_shareholder, :ownership, :udpate_ownership]
   respond_to :js, :html
 
   def index
@@ -8,6 +8,7 @@ class FirmsController < ApplicationController
   end
 
   def show
+    @shareholders = @firm.shareholders
   end
 
   def new
@@ -25,12 +26,24 @@ class FirmsController < ApplicationController
 
   def update
     @firm.update(firm_params)
-    redirect_to @firm
+    redirect_to add_shareholders_path(@firm)
   end
 
   def destroy
     @firm.destroy
     redirect_to firms_path
+  end
+
+  def ownership
+    @shareholders = @firm.shareholders
+  end
+
+  def update_ownership
+    params[:shareholder].keys.each do |id|
+      @shareholder = Shareholder.find(id.to_i)
+      @shareholder.update_attributes(set_shares(id))
+    end
+    redirect_to firm_path
   end
 
   private
@@ -43,6 +56,10 @@ class FirmsController < ApplicationController
 
     def find_firm
       @firm = Firm.find(params[:id])
+    end
+
+    def set_shares(id)
+      params.require(:shareholder).fetch(id).permit(:shares)
     end
 
 end

@@ -1,9 +1,9 @@
 class ShareholdersController < ApplicationController
 
+  before_action :find_firm, only: [:index, :create, :destroy]
   respond_to :js, :html
 
   def index
-    @firm = Firm.find(params[:id])
     @shareholder = Shareholder.new
   end
 
@@ -17,7 +17,6 @@ class ShareholdersController < ApplicationController
   end
 
   def create
-    @firm = Firm.find(params[:id])
     @firm.shareholders.create(shareholder_params)
     respond_with do |format|
       format.js
@@ -25,7 +24,6 @@ class ShareholdersController < ApplicationController
   end
 
   def destroy
-    @firm = Firm.find(params[:id])
     @firm.shareholders.find(params[:shareholder_id]).destroy
     respond_with do |format|
       format.js
@@ -33,6 +31,10 @@ class ShareholdersController < ApplicationController
   end
 
   private
+
+    def find_firm
+      @firm = Firm.find(params[:id])
+    end
 
     def shareholder_params
       params.require(:shareholder).permit(:first_name, :last_name, :birth_date, :email, :address,
