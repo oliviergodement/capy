@@ -1,4 +1,4 @@
-<%= form_for @shareholder, :url => {controller: "firms", action: "create_shareholder"}, remote: true do |f| %>
+<%= form_for @shareholder, url: create_shareholder_path, method: 'post', remote: true do |f| %>
   <%= f.label :first_name, "Prénom" %>
   <%= f.text_field :first_name %>
   <%= f.label :last_name, "Nom" %>
