@@ -51,7 +51,7 @@ class FirmsController < ApplicationController
   def refresh_financial_infos
     @firm = Firm.find(params[:id])
     @firm.update_attribute(:shares, @firm.shareholders.sum("shares"))
-    @firm.update_attribute(:share_price, @firm.initial_capital/@firm.shares)
+    @firm.update_attribute(:nominal_value, @firm.initial_capital/@firm.shares)
   end
 
   private
