@@ -18,7 +18,7 @@ class FirmPolicy < ApplicationPolicy
     record.user_id == user.id
   end
 
-  def ownserhip?
+  def ownership?
     record.user_id == user.id
   end
 
