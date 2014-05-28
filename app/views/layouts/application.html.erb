@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Capy</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <%= render 'layouts/navbar' %>
-  <div class="container">
-    <% flash.each do |name, msg| %>
-      <div class ="alert alert-<%=name%>"><%= content_tag :div, msg %></div>
-    <% end %>
-    <%= yield %>
-  </div>
+  <head>
+    <title>Capy</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <%= render 'layouts/navbar' %>
+    <div class="container">
+      <% flash.each do |name, msg| %>
+        <div class ="alert alert-<%=name%>"><%= content_tag :div, msg %></div>
+      <% end %>
+      <%= yield %>
+    </div>
 
-</body>
+  </body>
 </html>

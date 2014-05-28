@@ -7,11 +7,13 @@
   <th>Dernière édition</th>
   <th></th>
   <% @firms.each do |firm| %>
-    <tr>
-      <td><%=link_to firm.name, firm_path(firm)%></td>
-      <td><%=firm.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
-      <td><%=link_to "Editer les détails", edit_firm_path(firm)%></td>
-      <td><%= link_to "Supprimer la société", firm_path(firm), method: 'delete'%></td>
-    </tr>
+    <% if firm.user_id == current_user.id %>
+      <tr>
+        <td><%=link_to firm.name, firm_path(firm)%></td>
+        <td><%=firm.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
+        <td><%=link_to "Editer les détails", edit_firm_path(firm)%></td>
+        <td><%= link_to "Supprimer la société", firm_path(firm), method: 'delete'%></td>
+      </tr>
+    <% end %>
   <% end %>
 </table>

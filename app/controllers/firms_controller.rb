@@ -9,6 +9,7 @@ class FirmsController < ApplicationController
   end
 
   def show
+    authorize @firm
     @shareholders = @firm.shareholders
     @shares = @shareholders.sum("shares")
   end
@@ -32,16 +33,19 @@ class FirmsController < ApplicationController
   end
 
   def update
+    authorize @firm
     @firm.update(firm_params)
     redirect_to add_shareholders_path(@firm)
   end
 
   def destroy
+    authorize @firm
     @firm.destroy
     redirect_to firms_path
   end
 
   def ownership
+    authorize @firm
     @shareholders = @firm.shareholders
   end
 
