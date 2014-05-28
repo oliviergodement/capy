@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   root 'home#index'
   resources :firms
   resources :shareholders, only: [:index, :show, :edit, :update]

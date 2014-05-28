@@ -1,6 +1,7 @@
 class FirmsController < ApplicationController
 
   before_action :find_firm, only: [:show, :edit, :update, :destroy, :shareholders, :create_shareholder, :ownership, :udpate_ownership, :refresh_financial_infos]
+  before_action :authenticate_user!
   respond_to :js, :html
 
   def index
@@ -64,7 +65,7 @@ class FirmsController < ApplicationController
     def firm_params
       params.require(:firm).permit(:name, :official_address, :rcs, :court_service,
              :bank_name, :bank_agency, :bank_agency_address, :bank_account, :valuation,
-             :share_price, :initial_capital, :shares)
+             :share_price, :initial_capital, :shares, :user_id)
     end
 
     def find_firm

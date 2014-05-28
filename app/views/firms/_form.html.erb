@@ -22,6 +22,7 @@
   <%= f.text_field :bank_agency_address %>
   <%= f.label :bank_account, "Numéro de compte de la société" %>
   <%= f.text_field :bank_account %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
   <% if @firm.shareholders.any? %>
     <%= f.submit "Modifier les infos des actionnaires existants" %>
     <%= link_to "Définir la répartition du capital", ownership_path(@firm) %>
