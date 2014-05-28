@@ -1,18 +1,31 @@
-<h1>Liste des sociétés</h1>
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Liste des sociétés</h1>
+  </div>
+  <div class="col-sm-6">
+    <%= button_to "Ajouter une société", new_firm_path, method: 'get', class: "btn btn-primary pull-right"%>
+  </div>
+</div>
 
-<%= link_to "Ajouter une société", new_firm_path %>
-
-<table>
+<table class="table table-hover">
   <th>Société</th>
   <th>Dernière édition</th>
   <th></th>
-  <% @firms.each do |firm| %>
+  <th></th>
+  <th></th>
+  <% @firms.order("updated_at desc").each do |firm| %>
     <% if firm.user_id == current_user.id %>
       <tr>
-        <td><%=link_to firm.name, firm_path(firm)%></td>
+        <td><h4><%=link_to firm.name, firm_path(firm)%></h4></td>
         <td><%=firm.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
-        <td><%=link_to "Editer les détails", edit_firm_path(firm)%></td>
-        <td><%= link_to "Supprimer la société", firm_path(firm), method: 'delete'%></td>
+        <% if firm.rounds.any? %>
+          <td><%= button_to "Voir l'opération en cours", rounds_path(firm), method: 'get', class: "btn btn-sm btn-success center-block"%></td>
+        <% else %>
+          <td><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-success center-block"%>
+        <% end %>
+        </td>
+        <td><%= button_to "Editer les détails", edit_firm_path(firm), method: 'get', class: "btn btn-xs btn-default pull-right" %></td>
+        <td><%= button_to "Supprimer la société", firm_path(firm), method: 'delete', class: "btn btn-xs btn-danger pull-right"%></td>
       </tr>
     <% end %>
   <% end %>

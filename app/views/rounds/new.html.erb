@@ -1,0 +1,10 @@
+<h1>Créer une nouvelle opération pour <%= @firm.name %></h1>
+
+<%= form_for @round, url: create_round_path, method: 'post' do |f| %>
+  <%= f.label :name, "Nom donné à l'opération d'augmentation de capital" %>
+  <%= f.text_field :name, class: "form-control" %>
+  <%= f.label :ownership_offered, "Part du capital ouverte" %>
+  <%= f.number_field :ownership_offered, class: "form-control" '%'%>
+  <%= f.hidden_field :firm_id, value: @firm.id %>
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,14 @@
+<h1>Liste des opérations pour <%=@firm.name%></h1>
+
+<table class="table table-hover">
+  <th>Nom</th>
+  <th>Date de création</th>
+  <th>Dernière miseà jour</th>
+  <% @rounds.each do |round| %>
+    <tr>
+      <td><%= link_to round.name, show_round_path(@firm.id, round.id) %></td>
+      <td><%=round.created_at.strftime("%d %B %Y à %H:%M")  %></td>
+      <td><%=round.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
+    </tr>
+  <% end %>
+</table>

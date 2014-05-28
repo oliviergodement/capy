@@ -1,13 +1,25 @@
 Rails.application.routes.draw do
 
-  devise_for :users
   root 'home#index'
-  resources :firms
-  resources :shareholders, only: [:index, :show, :edit, :update]
 
-  get 'firms/:id/shareholders' => 'shareholders#index', as: :add_shareholders
-  post 'firms/:id/shareholders/' => 'shareholders#create', as: :create_shareholder
+  devise_for :users
+
+  resources :firms
+  get 'firms/:id/round/:round_id/ownership' => "firms#ownership", as: :ownership
+  post 'firms/:id/round/:round_id/ownership' => "firms#update_ownership", as: :update_ownership
+
+  resources :shareholders, only: [:show, :edit, :update]
+  get 'firms/:id/round/:round_id/shareholders' => 'shareholders#add_initial_shareholders', as: :add_shareholders
+  post 'firms/:id/round/:round_id/shareholders/' => 'shareholders#create', as: :create_shareholder
   delete 'firms/:id/shareholders/:shareholder_id' => 'shareholders#destroy', as: :delete_shareholder
-  get 'firms/:id/ownership' => "firms#ownership", as: :ownership
-  post 'firms/:id/ownership' => "firms#update_ownership", as: :update_ownership
+
+  resources :rounds, only: [:edit, :update, :destroy]
+  get 'firms/:id/rounds/new' => 'rounds#new', as: :new_round
+  get 'firm/:id/round/:round_id' => 'rounds#show', as: :show_round
+  post 'firm/:id/rounds' => 'rounds#create', as: :create_round
+  get 'firms/:id/rounds' => 'rounds#index', as: :rounds
+  get 'firms/:id/round/:round_id/shareholders' => 'shareholders#new_round_shareholder', as: :new_round_shareholder
+  post 'firms/:id/round/:round_id/shareholders' => 'shareholders#create_round_shareholder', as: :create_round_shareholder
+  # get 'firms/:id/round/:round_id/ownership' => 'rounds#ownership', as: :round_ownership
+  post 'firms/:id/round/:round_id/ownership' => 'rounds#update_ownership', as: :update_round_ownership
 end

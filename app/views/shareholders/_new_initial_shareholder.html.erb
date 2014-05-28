@@ -1,0 +1,13 @@
+<%= form_for Shareholder.new, url: create_shareholder_path, method: 'post', remote: true do |f| %>
+  <%= f.label :first_name, "Prénom" %>
+  <%= f.text_field :first_name %>
+  <%= f.label :last_name, "Nom" %>
+  <%= f.text_field :last_name %>
+  <%= f.label :birth_date, "Date de naissance" %>
+  <%= f.date_select :birth_date, start_year: 1930 %>
+  <%= f.label :address, "Adresse" %>
+  <%= f.text_field :address %>
+  <%= f.label :nationality, "Nationalité" %>
+  <%= f.text_field :nationality %>
+  <%= f.submit %>
+<% end %>

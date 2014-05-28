@@ -1,0 +1,22 @@
+<h1>Détails de l'opération '<%=@round.name%>'</h1>
+<hr>
+<p>Société : <%= @firm.name %><p>
+<p><%= @round.ownership_offered %>% ouvert</p>
+<p>Montant levé : <%=@round.amount_raised%></p>
+
+<%= button_to "Modifier les infos des participants au round", new_round_shareholder_path(@firm.id, @round.id), method: 'get' %>
+
+
+<h3>Liste des participants à l'opération</h3>
+<table class="table table-hover">
+  <th>Prénom</th>
+  <th>Nom</th>
+  <th>Montant investi</th>
+  <% @round.shareholders.each do |shareholder| %>
+    <tr>
+      <td><%=shareholder.first_name%></td>
+      <td><%=shareholder.last_name%></td>
+      <td><%=Investment.find_by(shareholder_id: shareholder.id).amount%></td>
+    </tr>
+  <% end %>
+</table>

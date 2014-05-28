@@ -1,0 +1,15 @@
+<h1>Ajouter les nouveaux actionnaires</h1>
+
+<div id="new_shareholder_form">
+  <%= render 'new_round_shareholders' %>
+</div>
+
+<div id="new_shareholders">
+  <%= render 'show_round_shareholders' %>
+</div>
+
+<% if @round.shareholders.any? %>
+  <%= button_to 'Modifier les montants investis', round_ownership_path(@firm, @round.id), method: 'get', class: 'btn btn-primary' %>
+<% else %>
+  <%= button_to 'Définir les investissements des nouveaux actionnaires', round_ownership_path(@firm, @round.id), method: 'get', class: 'btn btn-primary' %>
+<% end %>

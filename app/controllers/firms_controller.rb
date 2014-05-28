@@ -22,7 +22,8 @@ class FirmsController < ApplicationController
     @firm = Firm.new(firm_params)
     if @firm.valid?
       @firm.save
-      redirect_to add_shareholders_path(@firm)
+      @round = Round.create(firm_id: @firm.id)
+      redirect_to add_shareholders_path(@firm.id, @round.id)
     else
      flash[:error] = @firm.errors.full_messages
      render :new

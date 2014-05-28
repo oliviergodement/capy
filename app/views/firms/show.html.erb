@@ -1,42 +1,48 @@
-<h1>Société '<%= @firm.name %>'</h1>
 
-<%=link_to "Editer les détails de la société", edit_firm_path(@firm)%>
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Société '<%= @firm.name %>'</h1>
+  </div>
+  <div class="col-sm-6">
+    <%=button_to "Editer les détails de la société", edit_firm_path(@firm), method: 'get', class: "btn btn-primary pull-right" %>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-sm-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Informations sur la société</h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <p>Adresse : <%=@firm.official_address%></p>
+          <p>Numéro RCS : <%=@firm.rcs%> (greffe de <%=@firm.court_service%>)</p>
+          <p>Banque : <%=@firm.bank_name%> (agence <%=@firm.bank_agency%>)</p>
+          <p>Adresse de la banque : <%=@firm.bank_agency_address%></p>
+          <p>Numéro de compte : <%=@bank_account%></p>
+        </div>
+        <div class="col-sm-6">
+          <p>Capital social initial: <strong><%= @firm.initial_capital.to_s %></strong> €</p>
+          <p><strong><%=@firm.shares%></strong> actions en circulation</p>
+          <p>Valeur nominale de <strong><%=@firm.nominal_value.to_s%> €</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<table>
-    <tr>
-      <td>Adresse</td>
-      <td><%=@firm.official_address%></td>
-    </tr>
-    <tr>
-      <td>Numéro RCS</td>
-      <td><%=@firm.rcs%></td>
-    </tr>
-    <tr>
-      <td>Banque</td>
-      <td><%=@firm.bank_name%> (agence <%=@firm.bank_agency%>)</td>
-      <td><%=@firm.bank_agency_address%></td>
-    </tr>
-    <tr>
-      <td>Numéro de compte</td>
-      <td><%=@bank_account%></td>
-    </tr>
-</table>
-
-
-<table>
+<div class="row"></div>
+<h3>Liste des actionnaires</h3>
+<table class="table table-hover">
   <th>Prénom</th>
   <th>Nom</th>
-  <th>Nombre d'actions</th>
+  <th></th>
   <% @shareholders.each do |shareholder| %>
     <tr>
       <td><%= shareholder.first_name %></td>
       <td><%= shareholder.last_name %></td>
-      <td><%= shareholder.shares %></td>
+      <td><%= shareholder.shares %> actions</td>
     </tr>
   <% end %>
 </table>
-
-<h4>Capital social initial: <strong><%= @firm.initial_capital.to_s %></strong> €</h4>
-
-<h4><strong><%=@firm.shares%></strong> actions en circulation</h4>
-<h4>Valeur nominale de <strong><%=@firm.nominal_value.to_s%> €</strong></h4>

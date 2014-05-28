@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140528081453) do
+ActiveRecord::Schema.define(version: 20140528145125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,9 +43,11 @@ ActiveRecord::Schema.define(version: 20140528081453) do
     t.integer  "shareholder_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "round_id"
   end
 
   add_index "investments", ["firm_id"], name: "index_investments_on_firm_id", using: :btree
+  add_index "investments", ["round_id"], name: "index_investments_on_round_id", using: :btree
   add_index "investments", ["shareholder_id"], name: "index_investments_on_shareholder_id", using: :btree
 
   create_table "rounds", force: true do |t|
@@ -73,6 +75,7 @@ ActiveRecord::Schema.define(version: 20140528081453) do
     t.integer  "firm_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "initial_investor",  default: false
   end
 
   add_index "shareholders", ["firm_id"], name: "index_shareholders_on_firm_id", using: :btree
