@@ -27,12 +27,6 @@ class RoundsController < ApplicationController
     @shareholder = Shareholder.new
   end
 
-  def ownership
-    @firm = Firm.find(params[:id])
-    @round = Round.find(params[:round_id])
-    @investments = Investment.find_by(firm_id: @firm.id)
-  end
-
   def edit
   end
 

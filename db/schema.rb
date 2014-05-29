@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529160610) do
+ActiveRecord::Schema.define(version: 20140529162648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140529160610) do
     t.decimal  "initial_capital",     precision: 15, scale: 7
     t.decimal  "pre_valuation",       precision: 15, scale: 7
     t.decimal  "post_valuation",      precision: 15, scale: 7
+    t.decimal  "premium"
   end
 
   add_index "firms", ["user_id"], name: "index_firms_on_user_id", using: :btree
@@ -67,17 +68,19 @@ ActiveRecord::Schema.define(version: 20140529160610) do
     t.text     "first_name"
     t.text     "last_name"
     t.date     "birth_date"
-    t.string   "email",             default: ""
+    t.string   "email",                 default: ""
     t.string   "address"
     t.string   "nationality"
-    t.boolean  "founder",           default: false
+    t.boolean  "founder",               default: false
     t.decimal  "ownership"
-    t.integer  "shares"
-    t.decimal  "initial_ownership", default: 0.0
+    t.decimal  "initial_ownership",     default: 0.0
     t.integer  "firm_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "initial_investor",  default: false
+    t.boolean  "initial_investor",      default: false
+    t.integer  "corrected_shares"
+    t.float    "shares"
+    t.decimal  "non_subscribed_amount"
   end
 
   add_index "shareholders", ["firm_id"], name: "index_shareholders_on_firm_id", using: :btree
@@ -96,7 +99,6 @@ ActiveRecord::Schema.define(version: 20140529160610) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "corrected_shares"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

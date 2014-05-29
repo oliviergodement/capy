@@ -44,6 +44,7 @@
         <div class="panel-body">
           <p>Montant levé : <%= number_with_delimiter(@firm.rounds.last.amount_raised, delimiter: " ", separator: ",", locale: :fr) %> € (<%= @firm.rounds.last.ownership_offered%>% du capital ouvert)</p>
           <p>Nouveau prix de l'action : <%= number_with_delimiter(@firm.real_value, locale: :fr) %> €</p>
+          <p>Prime d'émission <%= @firm.premium.round(2) %> €</p>
           <p>Valorisation pre-money : <%= number_with_delimiter(@firm.pre_valuation, delimiter: " ", separator: ",", locale: :fr) %> €</p>
           <p>Valorisation post-money : <%= number_with_delimiter(@firm.post_valuation, delimiter: " ", separator: ",", locale: :fr) %> €</p>
         </div>
@@ -58,13 +59,27 @@
   <th>Prénom</th>
   <th>Nom</th>
   <th>Nb d'actions détenues</th>
+  <th>Nb d'actions détenues (rompus)</th>
+  <% if @firm.rounds.count > 1 %>
+    <th>Montant non-souscrit (rompus)</th>
+    <th>Prime d'émission</th>
+  <% end %>
   <th>Capital détenu</th>
-  <% @shareholders.each do |shareholder| %>
+  <% @shareholders.order("created_at asc").each do |shareholder| %>
     <tr>
       <td><%= shareholder.first_name %></td>
       <td><%= shareholder.last_name %></td>
-      <td><%= shareholder.shares %> actions</td>
+      <td><%= shareholder.shares.round(2) %> actions</td>
+      <td><%= shareholder.corrected_shares %> actions</td>
+      <% if @firm.rounds.count > 1 && !shareholder.initial_investor %>
+        <td><%= shareholder.non_subscribed_amount.round(2) %> €</td>
+        <td><%= (shareholder.corrected_shares * @firm.premium).round(2) %> €</td>
+      <% else %>
+        <td>0</td>
+        <td>0</td>
+      <% end %>
       <td><%= ((shareholder.shares.to_f/@firm.shares.to_f)*100).round(2)%>% </td>
+
     </tr>
   <% end %>
 </table>

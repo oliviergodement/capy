@@ -61,6 +61,7 @@ class FirmsController < ApplicationController
       params[:shareholder].keys.each do |id|
         @shareholder = Shareholder.find(id.to_i)
         @shareholder.update_attributes(set_shares(id))
+        @shareholder.update_attribute(:corrected_shares, @shareholder.shares.floor)
       end
       setup_financial_infos(@firm)
 
@@ -92,6 +93,7 @@ class FirmsController < ApplicationController
     round.update_attribute(:amount_raised, round.investments.sum("amount"))
     firm.update_attribute(:pre_valuation, round.amount_raised/(round.ownership_offered/100))
     firm.update_attribute(:real_value, firm.pre_valuation/firm.shares)
+    firm.update_attribute(:premium, firm.real_value - firm.nominal_value)
     firm.update_attribute(:post_valuation, firm.pre_valuation + round.amount_raised)
   end
 
@@ -99,7 +101,9 @@ class FirmsController < ApplicationController
     new_outstanding_shares = firm.shares
     round.shareholders.each do |shareholder|
       shareholder.update_attribute(:shares, shareholder.investments.last.amount / firm.real_value)
-      new_outstanding_shares += shareholder.shares
+      shareholder.update_attribute(:corrected_shares, shareholder.shares.floor)
+      shareholder.update_attribute(:non_subscribed_amount, (shareholder.shares - shareholder.corrected_shares)/firm.real_value)
+      new_outstanding_shares += shareholder.corrected_shares
     end
     firm.update_attribute(:shares, new_outstanding_shares)
   end
