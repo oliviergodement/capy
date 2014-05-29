@@ -1,10 +1,13 @@
+<hr>
 <% if @firm.shareholders.any? %>
-  <table>
+  <h3>Liste des nouveaux actionnaires</h3>
+  <table class="table table-hover">
     <th>Prénom</th>
     <th>Nom</th>
     <th>Adresse</th>
     <th>Date de naissance</th>
     <th>Nationalité</th>
+    <th></th>
   <% @firm.shareholders.each do |shareholder| %>
     <% if (@round.initial_round && shareholder.initial_investor) || (!@round.initial_round && !shareholder.initial_investor) %>
         <tr>
@@ -18,4 +21,6 @@
     <% end %>
   <%end%>
   </table>
+
+  <%= button_to 'Définir la répartition du capital entre actionnaires', ownership_path(@firm, @round.id), method: 'get', class: "btn btn-primary add-ownership-button" %>
 <% end %>

@@ -1,10 +1,15 @@
 
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-5">
     <h1>Société '<%= @firm.name %>'</h1>
   </div>
-  <div class="col-sm-6">
+  <div class="col-sm-7">
     <%=button_to "Editer les détails de la société", edit_firm_path(@firm), method: 'get', class: "btn btn-primary pull-right" %>
+    <% if @firm.rounds.count > 1 %>
+      <%= button_to "Voir l'opération en cours", rounds_path(@firm), method: 'get', class: "btn btn-success center-block"%>
+    <% else %>
+      <%= button_to "Démarrer une augmentation de capital", new_round_path(@firm), method: 'get', class: "btn btn-success center-block"%>
+    <% end %>
   </div>
 </div>
 <hr>
@@ -30,6 +35,21 @@
       </div>
     </div>
   </div>
+  <% if @firm.rounds.count > 1 %>
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Infos post-levée</h3>
+        </div>
+        <div class="panel-body">
+          <p>Montant levé : <%= @firm.rounds.last.amount_raised.to_s %> € (<%= @firm.rounds.last.ownership_offered%>% du capital ouvert)</p>
+          <p>Nouveau prix de l'action : <%= @firm.real_value.to_s %> €</p>
+          <p>Valorisation pre-money : <%= @firm.pre_valuation.to_s %> €</p>
+          <p>Valorisation post-money : <%= @firm.post_valuation.to_s %> €</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <div class="row"></div>
@@ -37,12 +57,14 @@
 <table class="table table-hover">
   <th>Prénom</th>
   <th>Nom</th>
-  <th></th>
+  <th>Nb d'actions détenues</th>
+  <th>Capital détenu</th>
   <% @shareholders.each do |shareholder| %>
     <tr>
       <td><%= shareholder.first_name %></td>
       <td><%= shareholder.last_name %></td>
       <td><%= shareholder.shares %> actions</td>
+      <td><%= ((shareholder.shares.to_f/@firm.shares.to_f)*100).round(2)%>% </td>
     </tr>
   <% end %>
 </table>

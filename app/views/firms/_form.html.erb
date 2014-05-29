@@ -42,9 +42,15 @@
   </div>
   <%= f.hidden_field :user_id, value: current_user.id %>
   <% if @firm.shareholders.any? %>
-    <%= f.submit "Modifier les infos des actionnaires existants" %>
-    <%= link_to "Définir la répartition du capital", ownership_path(@firm) %>
+    <div class="row">
+      <div class="col-sm-4">
+        <%= f.submit "Modifier les infos des actionnaires existants", class: 'btn btn-primary border-bottom' %>
+      </div>
+      <div class="col-sm-4 col-sm-offset-1">
+        <%= button_to "Définir la répartition du capital", ownership_path(@firm, @round), method: 'get', class: 'btn btn-primary border-bottom' %>
+      </div>
+    </div>
   <% else %>
-    <%= f.submit "Ajouter les actionnaires pré-levée" %>
+    <%= f.submit "Ajouter les actionnaires pré-levée", class: 'btn btn-primary border-bottom' %>
   <% end %>
 <% end %>

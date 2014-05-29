@@ -1,6 +1,6 @@
 class FirmsController < ApplicationController
 
-  before_action :find_firm, only: [:show, :edit, :update, :destroy, :shareholders, :create_shareholder, :ownership, :udpate_ownership, :refresh_financial_infos]
+  before_action :find_firm, only: [:show, :edit, :update, :destroy, :shareholders, :create_shareholder, :ownership, :update_ownership, :refresh_financial_infos]
   before_action :find_round, only: [:ownership, :update_ownership]
   before_action :authenticate_user!
   respond_to :js, :html
@@ -14,7 +14,6 @@ class FirmsController < ApplicationController
     @shareholders = @firm.shareholders
     if @firm.rounds == 1
       @shares = @shareholders.sum("shares")
-    elsif @firm.rounds > 1
     end
   end
 
@@ -36,6 +35,7 @@ class FirmsController < ApplicationController
   end
 
   def edit
+    @round = @firm.rounds.last if @firm.shareholders.any?
   end
 
   def update
@@ -56,34 +56,52 @@ class FirmsController < ApplicationController
   end
 
   def update_ownership
+    # for initial investors
     if @round.initial_round
       params[:shareholder].keys.each do |id|
         @shareholder = Shareholder.find(id.to_i)
         @shareholder.update_attributes(set_shares(id))
       end
-      setup_financial_infos
+      setup_financial_infos(@firm)
 
       @firm.shareholders.each do |shareholder|
         if shareholder.initial_investor
           Investment.create(firm_id: @firm.id, round_id: @round.id, shareholder_id: shareholder.id, amount: (shareholder.shares * @firm.nominal_value))
-          shareholder.update_attributes()
         end
       end
 
+    # for new investors
     else
       params[:shareholder].each do |shareholder_id, investment|
         next if investment["amount"].blank?
         @shareholder = Shareholder.find(shareholder_id)
         @shareholder.investments.create(investment.delete_if { |k, v| !%w(amount round_id firm_id).include? k })
       end
+      compute_new_value(@firm, @round)
+      compute_new_shares(@firm, @round)
     end
     redirect_to firm_path
   end
 
-  def setup_financial_infos
-    @firm = Firm.find(params[:id])
-    @firm.update_attribute(:shares, @firm.shareholders.sum("shares"))
-    @firm.update_attribute(:nominal_value, @firm.initial_capital/@firm.shares)
+  def setup_financial_infos(firm)
+    firm.update_attribute(:shares, firm.shareholders.sum("shares"))
+    firm.update_attribute(:nominal_value, firm.initial_capital/firm.shares)
+  end
+
+  def compute_new_value(firm, round)
+    round.update_attribute(:amount_raised, round.investments.sum("amount"))
+    firm.update_attribute(:pre_valuation, round.amount_raised/(round.ownership_offered/100))
+    firm.update_attribute(:real_value, firm.pre_valuation/firm.shares)
+    firm.update_attribute(:post_valuation, firm.pre_valuation + round.amount_raised)
+  end
+
+  def compute_new_shares(firm, round)
+    new_outstanding_shares = firm.shares
+    round.shareholders.each do |shareholder|
+      shareholder.update_attribute(:shares, shareholder.investments.last.amount / firm.real_value)
+      new_outstanding_shares += shareholder.shares
+    end
+    firm.update_attribute(:shares, new_outstanding_shares)
   end
 
   private

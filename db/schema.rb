@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140528164842) do
+ActiveRecord::Schema.define(version: 20140529125500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(version: 20140528164842) do
     t.integer  "user_id"
     t.decimal  "nominal_value",       precision: 15, scale: 7
     t.decimal  "real_value",          precision: 15, scale: 7
-    t.decimal  "valuation",           precision: 15, scale: 7
     t.decimal  "initial_capital",     precision: 15, scale: 7
+    t.decimal  "pre_valuation",       precision: 15, scale: 7
+    t.decimal  "post_valuation",      precision: 15, scale: 7
   end
 
   add_index "firms", ["user_id"], name: "index_firms_on_user_id", using: :btree

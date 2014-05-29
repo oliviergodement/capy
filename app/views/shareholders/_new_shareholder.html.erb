@@ -1,13 +1,33 @@
-<%= form_for Shareholder.new, url: create_shareholder_path, method: 'post', remote: true do |f| %>
-  <%= f.label :first_name, "Prénom" %>
-  <%= f.text_field :first_name %>
-  <%= f.label :last_name, "Nom" %>
-  <%= f.text_field :last_name %>
-  <%= f.label :birth_date, "Date de naissance" %>
-  <%= f.date_select :birth_date, start_year: 1930 %>
-  <%= f.label :address, "Adresse" %>
-  <%= f.text_field :address %>
-  <%= f.label :nationality, "Nationalité" %>
-  <%= f.text_field :nationality %>
-  <%= f.submit %>
-<% end %>
+<div class="form-group">
+  <%= form_for Shareholder.new, url: create_shareholder_path, method: 'post', remote: true do |f| %>
+    <div class="row">
+      <div class="col-sm-3">
+      <%= f.label :first_name, "Prénom" %>
+      <%= f.text_field :first_name, class: "form-control", placeholder: 'Prénom' %>
+      </div>
+      <div class="col-sm-3">
+      <%= f.label :last_name, "Nom" %>
+      <%= f.text_field :last_name, class: "form-control", placeholder: 'Nom' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <%= f.label :nationality, "Nationalité" %>
+        <%= f.text_field :nationality, class: "form-control", placeholder: 'Nationalité' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.label :birth_date, "Date de naissance" %><br>
+        <%= f.date_select :birth_date, start_year: 1930, class: "form-control" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.label :address, "Adresse" %>
+        <%= f.text_area :address, class: "form-control", rows: "3", placeholder: 'Adresse postale' %>
+      </div>
+    </div>
+    <%= f.submit "Ajouter un nouvel actionnaire", class: "btn btn-primary submit-button"%>
+  <% end %>
+</div>

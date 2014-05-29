@@ -3,11 +3,11 @@
     <h1>Liste des sociétés</h1>
   </div>
   <div class="col-sm-6">
-    <%= button_to "Ajouter une société", new_firm_path, method: 'get', class: "btn btn-primary pull-right"%>
+    <%= button_to "Ajouter une société", new_firm_path, method: 'get', class: "btn btn-success pull-right"%>
   </div>
 </div>
 
-<table class="table table-hover">
+<table class="table table-hover firms-index-table">
   <th>Société</th>
   <th>Dernière édition</th>
   <th></th>
@@ -19,9 +19,9 @@
         <td><h4><%=link_to firm.name, firm_path(firm)%></h4></td>
         <td><%=firm.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
         <% if firm.rounds.count > 1 %>
-          <td><%= button_to "Voir l'opération en cours", rounds_path(firm), method: 'get', class: "btn btn-sm btn-success center-block"%></td>
+          <td><%= button_to "Voir l'opération en cours", rounds_path(firm), method: 'get', class: "btn btn-sm btn-primary center-block"%></td>
         <% else %>
-          <td><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-success center-block"%>
+          <td><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-primary center-block"%>
         <% end %>
         </td>
         <td><%= button_to "Editer les détails", edit_firm_path(firm), method: 'get', class: "btn btn-xs btn-default pull-right" %></td>

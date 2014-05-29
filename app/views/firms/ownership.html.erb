@@ -1,14 +1,20 @@
 <% if @round.initial_round %>
-  <h1>Déterminer les parts des actionnaires de <%= @firm.name %> (pré-levée)</h1>
+  <p class="lead">Déterminer les parts des actionnaires de <%= @firm.name %> (pré-levée)</p>
 <% else %>
-  <h1>Définir les montants investis par les nouveaux actionnaires de <%= @firm.name %> (post-levée)</h1>
+  <p class="lead">Définir les montants investis par les nouveaux actionnaires de <%= @firm.name %> (post-levée)</p>
 <% end%>
 
-  <table>
-    <th>Prénom</th>
-    <th>Nom</th>
-    <th>Nombre d'actions</th>
-    <%= form_for :shareholder, url: update_ownership_path, method: 'post' do |f| %>
+<div class="row">
+  <div class="col-sm-8">
+  <%= form_for :shareholder, url: update_ownership_path, method: 'post' do |f| %>
+    <table class="table">
+      <th>Prénom</th>
+      <th>Nom</th>
+      <% if @round.initial_round %>
+        <th>Nombre d'actions</th>
+      <% else %>
+        <th>Montant investi</th>
+      <% end %>
       <% @firm.shareholders.each do |shareholder| %>
           <tr>
             <% if @round.initial_round && shareholder.initial_investor%>
@@ -16,7 +22,9 @@
               <td><%= shareholder.last_name %></td>
               <td>
                 <%= fields_for "shareholder[]", shareholder do |share_f| %>
-                  <%= share_f.number_field :shares %>
+                <div class="form-group">
+                  <%= share_f.number_field :shares, class: "form-control", placeholder: "Nombre d'actions" %>
+                </div>
                 <% end %>
               </td>
 
@@ -26,7 +34,9 @@
                 <td><%= shareholder.last_name %></td>
                 <td>
                   <%= f.fields_for "#{shareholder.id}" do |inv_f| %>
-                    <%= inv_f.number_field :amount %>
+                    <div class="form-group col-sm-7">
+                      <%= inv_f.number_field :amount, class: 'form-control', placeholder: "Montant en euros" %>
+                    </div>
                     <%= inv_f.hidden_field :round_id, value: @round.id %>
                     <%= inv_f.hidden_field :firm_id, value: @firm.id %>
                   <% end %>
@@ -35,6 +45,8 @@
             <% end%>
         </tr>
       <% end %>
-      <%= f.submit %>
+      </table>
+      <%= f.submit "Finaliser l'augmentation de capital", class: 'btn btn-primary' %>
     <% end %>
-  </table>
+  </div>
+</div>
