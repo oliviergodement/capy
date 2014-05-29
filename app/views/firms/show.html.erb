@@ -28,7 +28,7 @@
           <p>Numéro de compte : <%=@bank_account%></p>
         </div>
         <div class="col-sm-6">
-          <p>Capital social pré-augmentation de capital: <strong><%= @firm.initial_capital.to_s %></strong> €</p>
+          <p>Capital social pré-augmentation de capital: <strong><%= number_with_delimiter(@firm.initial_capital.to_s, delimiter: " ", separator: ",", locale: :fr) %></strong> €</p>
           <p><strong><%=@firm.shares%></strong> actions en circulation</p>
           <p>Valeur nominale de <strong><%=@firm.nominal_value.to_s%> €</strong></p>
         </div>
@@ -42,10 +42,10 @@
           <h3 class="panel-title">Infos post-levée</h3>
         </div>
         <div class="panel-body">
-          <p>Montant levé : <%= @firm.rounds.last.amount_raised.to_s %> € (<%= @firm.rounds.last.ownership_offered%>% du capital ouvert)</p>
-          <p>Nouveau prix de l'action : <%= @firm.real_value.to_s %> €</p>
-          <p>Valorisation pre-money : <%= @firm.pre_valuation.to_s %> €</p>
-          <p>Valorisation post-money : <%= @firm.post_valuation.to_s %> €</p>
+          <p>Montant levé : <%= number_with_delimiter(@firm.rounds.last.amount_raised, delimiter: " ", separator: ",", locale: :fr) %> € (<%= @firm.rounds.last.ownership_offered%>% du capital ouvert)</p>
+          <p>Nouveau prix de l'action : <%= number_with_delimiter(@firm.real_value, locale: :fr) %> €</p>
+          <p>Valorisation pre-money : <%= number_with_delimiter(@firm.pre_valuation, delimiter: " ", separator: ",", locale: :fr) %> €</p>
+          <p>Valorisation post-money : <%= number_with_delimiter(@firm.post_valuation, delimiter: " ", separator: ",", locale: :fr) %> €</p>
         </div>
       </div>
     </div>

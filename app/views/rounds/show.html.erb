@@ -6,7 +6,7 @@
   <p>Montant levé : <%=@round.amount_raised%></p>
 <% end%>
 
-<%= button_to "Modifier les infos des participants au round", new_shareholder_path(@firm.id, @round.id), method: 'get' %>
+<%= button_to "Modifier les infos des participants au round", new_shareholder_path(@firm.id, @round.id), method: 'get', class: 'btn btn-primary' %>
 
 
 <h3>Liste des participants à l'opération</h3>
