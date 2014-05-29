@@ -1,21 +1,40 @@
-<h1>Déterminer les parts des actionnaires de <%= @firm.name %> (pré-levée)</h1>
+<% if @round.initial_round %>
+  <h1>Déterminer les parts des actionnaires de <%= @firm.name %> (pré-levée)</h1>
+<% else %>
+  <h1>Définir les montants investis par les nouveaux actionnaires de <%= @firm.name %> (post-levée)</h1>
+<% end%>
 
-<%= form_for :shareholder, url: update_ownership_path, method: 'post' do |f| %>
-<table>
-  <th>Prénom</th>
-  <th>Nom</th>
-  <th>Nombre d'actions</th>
-    <% @firm.shareholders.each do |shareholder| %>
-      <tr>
-        <td><%= shareholder.first_name %></td>
-        <td><%= shareholder.last_name %></td>
-        <td>
-          <%= fields_for "shareholder[]", shareholder do |share_f| %>
-            <%= share_f.number_field :shares %>
-          <% end %>
-        </td>
-      </tr>
+  <table>
+    <th>Prénom</th>
+    <th>Nom</th>
+    <th>Nombre d'actions</th>
+    <%= form_for :shareholder, url: update_ownership_path, method: 'post' do |f| %>
+      <% @firm.shareholders.each do |shareholder| %>
+          <tr>
+            <% if @round.initial_round && shareholder.initial_investor%>
+              <td><%= shareholder.first_name %></td>
+              <td><%= shareholder.last_name %></td>
+              <td>
+                <%= fields_for "shareholder[]", shareholder do |share_f| %>
+                  <%= share_f.number_field :shares %>
+                <% end %>
+              </td>
+
+            <% else %>
+              <% if !shareholder.initial_investor %>
+                <td><%= shareholder.first_name %></td>
+                <td><%= shareholder.last_name %></td>
+                <td>
+                  <%= f.fields_for "#{shareholder.id}" do |inv_f| %>
+                    <%= inv_f.number_field :amount %>
+                    <%= inv_f.hidden_field :round_id, value: @round.id %>
+                    <%= inv_f.hidden_field :firm_id, value: @firm.id %>
+                  <% end %>
+                </td>
+              <% end%>
+            <% end%>
+        </tr>
       <% end %>
-  <%= f.submit %>
-<% end %>
-</table>
+      <%= f.submit %>
+    <% end %>
+  </table>

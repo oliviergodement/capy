@@ -1,0 +1,16 @@
+<% if @round.initial_round %>
+  <h1>Ajouter les actionnaires initiaux (pré-levée) de la société <%=@firm.name%></h1>
+<% else %>
+  <h1>Ajouter les nouveaux actionnaires</h1>
+<% end %>
+
+
+<div id="new-shareholder">
+    <%= render 'new_shareholder' %>
+</div>
+
+<div id="shareholders">
+  <%= render 'show_shareholders' %>
+</div>
+
+<%= link_to 'Définir la répartition du capital entre actionnaires', ownership_path(@firm, @round.id) %>

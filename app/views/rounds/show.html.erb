@@ -1,10 +1,12 @@
 <h1>Détails de l'opération '<%=@round.name%>'</h1>
 <hr>
 <p>Société : <%= @firm.name %><p>
-<p><%= @round.ownership_offered %>% ouvert</p>
-<p>Montant levé : <%=@round.amount_raised%></p>
+<% unless @round.initial_round %>
+  <p><%= @round.ownership_offered %>% ouvert</p>
+  <p>Montant levé : <%=@round.amount_raised%></p>
+<% end%>
 
-<%= button_to "Modifier les infos des participants au round", new_round_shareholder_path(@firm.id, @round.id), method: 'get' %>
+<%= button_to "Modifier les infos des participants au round", new_shareholder_path(@firm.id, @round.id), method: 'get' %>
 
 
 <h3>Liste des participants à l'opération</h3>

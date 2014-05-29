@@ -7,8 +7,9 @@ class RoundsController < ApplicationController
 
   def create
     @round = Round.create(round_params)
+    @round.update_attribute(:initial_round, false)
     @firm = Firm.find(@round.firm_id)
-    redirect_to new_round_shareholder_path(@firm.id, @round.id)
+    redirect_to new_shareholder_path(@firm.id, @round.id)
   end
 
   def show
@@ -30,17 +31,6 @@ class RoundsController < ApplicationController
     @firm = Firm.find(params[:id])
     @round = Round.find(params[:round_id])
     @investments = Investment.find_by(firm_id: @firm.id)
-  end
-
-  def update_ownership
-    @firm = Firm.find(params[:id])
-    @round = Round.find(params[:round_id])
-    params[:investment].keys.each do |id|
-      @investment = Investment.find(id.to_i)
-      @investment.update_attributes(set_amount(id))
-    end
-    @round.update_attribute(:amount_raised, @round.shareholders.sum('amount'))
-    redirect_to show_round_path(@firm.id, @round.id)
   end
 
   def edit
