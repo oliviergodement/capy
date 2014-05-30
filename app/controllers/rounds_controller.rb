@@ -1,30 +1,23 @@
 class RoundsController < ApplicationController
 
+  before_action :find_firm, only: [:new, :create, :show, :index]
+
   def new
     @round = Round.new
-    @firm = Firm.find(params[:id])
   end
 
   def create
     @round = Round.create(round_params)
     @round.update_attribute(:initial_round, false)
-    @firm = Firm.find(@round.firm_id)
     redirect_to new_shareholder_path(@firm.id, @round.id)
   end
 
   def show
     @round = Round.find(params[:round_id])
-    @firm = Firm.find(params[:id])
   end
 
   def index
-    @firm = Firm.find(params[:id])
     @rounds = @firm.rounds
-  end
-
-  def new_investments
-    @firm = Firm.find(params[:id])
-    @shareholder = Shareholder.new
   end
 
   def edit
@@ -37,6 +30,10 @@ class RoundsController < ApplicationController
   end
 
   private
+
+    def find_firm
+      @firm = Firm.find(params[:id])
+    end
 
     def round_params
       params.require(:round).permit(:name, :ownership_offered, :firm_id)

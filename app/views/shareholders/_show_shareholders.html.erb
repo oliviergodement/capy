@@ -16,7 +16,7 @@
           <td><%=shareholder.address%></td>
           <td><%=shareholder.birth_date%></td>
           <td><%=shareholder.nationality%></td>
-          <td><%= link_to 'Delete shareholder', delete_shareholder_path(@firm, shareholder), method: 'delete', remote: true %></td>
+          <td><%= link_to 'Delete shareholder', delete_shareholder_path(@firm, @round.id, shareholder), method: 'delete', remote: true %></td>
         </tr>
     <% end %>
   <%end%>

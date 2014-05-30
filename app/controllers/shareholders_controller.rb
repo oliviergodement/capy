@@ -1,11 +1,11 @@
 class ShareholdersController < ApplicationController
 
-  before_action :find_firm, only: [:new, :create, :destroy, :new_round_shareholder, :create_round_shareholder]
+  before_action :find_firm, only: [:new, :create, :destroy]
+  before_action :find_round, only: [:new, :create, :destroy]
   respond_to :js, :html
 
   def new
     @shareholder = Shareholder.new
-    @round = Round.find(params[:round_id])
   end
 
   def show
@@ -19,7 +19,6 @@ class ShareholdersController < ApplicationController
 
   def create
     @shareholder = @firm.shareholders.create(shareholder_params)
-    @round = Round.find(params[:round_id])
     if @round.initial_round
       @shareholder.update_attribute(:initial_investor, true)
     else
@@ -32,7 +31,7 @@ class ShareholdersController < ApplicationController
   end
 
   def destroy
-    @firm.shareholders.find(params[:shareholder_id]).destroy
+    Shareholder.find(params[:shareholder_id]).destroy
     respond_with do |format|
       format.js
     end
@@ -42,6 +41,10 @@ class ShareholdersController < ApplicationController
 
     def find_firm
       @firm = Firm.find(params[:id])
+    end
+
+    def find_round
+      @round = Round.find(params[:round_id])
     end
 
     def shareholder_params

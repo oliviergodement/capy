@@ -102,7 +102,7 @@ class FirmsController < ApplicationController
     round.shareholders.each do |shareholder|
       shareholder.update_attribute(:shares, shareholder.investments.last.amount / firm.real_value)
       shareholder.update_attribute(:corrected_shares, shareholder.shares.floor)
-      shareholder.update_attribute(:non_subscribed_amount, (shareholder.shares - shareholder.corrected_shares)/firm.real_value)
+      shareholder.update_attribute(:non_subscribed_amount, (shareholder.shares - shareholder.corrected_shares)*firm.real_value)
       new_outstanding_shares += shareholder.corrected_shares
     end
     firm.update_attribute(:shares, new_outstanding_shares)
