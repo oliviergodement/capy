@@ -2,11 +2,13 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  devise_for :users
+  devise_for :users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
 
   resources :firms
   get 'firms/:id/round/:round_id/ownership' => "firms#ownership", as: :ownership
   post 'firms/:id/round/:round_id/ownership' => "firms#update_ownership", as: :update_ownership
+  get 'firms/:id/cap_table' => "firms#cap_table", as: :cap_table
 
   resources :shareholders, only: [:show, :edit, :update]
   get 'firms/:id/round/:round_id/shareholders' => 'shareholders#new', as: :new_shareholder

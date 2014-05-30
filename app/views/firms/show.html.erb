@@ -42,6 +42,8 @@
           <h3 class="panel-title">Infos post-levée</h3>
         </div>
         <div class="panel-body">
+          <p>
+          Télécharger le tableau de capitalisation : <%= link_to "Format Excel", cap_table_path(format: "xls") %>
           <p>Montant levé : <%= number_with_delimiter(@firm.rounds.last.amount_raised, delimiter: " ", separator: ",", locale: :fr) %> € (<%= @firm.rounds.last.ownership_offered%>% du capital ouvert)</p>
           <p>Nouveau prix de l'action : <%= number_with_delimiter(@firm.real_value.round(2), locale: :fr) %> €</p>
           <p>Prime d'émission <%= @firm.premium.round(2) %> €</p>
