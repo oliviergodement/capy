@@ -99,7 +99,7 @@ class FirmsController < ApplicationController
 
   def compute_new_value(firm, round)
     round.update_attribute(:amount_raised, round.investments.sum("amount"))
-    firm.update_attribute(:pre_valuation, round.amount_raised/(round.ownership_offered/100))
+    firm.update_attribute(:pre_valuation, (round.amount_raised/(round.ownership_offered/100) - round.amount_raised))
     firm.update_attribute(:real_value, firm.pre_valuation/firm.shares)
     firm.update_attribute(:premium, firm.real_value - firm.nominal_value)
     firm.update_attribute(:post_valuation, firm.pre_valuation + round.amount_raised)

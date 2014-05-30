@@ -78,6 +78,7 @@
           <p>Prime d'émission <%= @firm.premium.round(2) %> €</p>
           <p>Valorisation pre-money : <%= number_with_delimiter(@firm.pre_valuation, delimiter: " ", separator: ",", locale: :fr) %> €</p>
           <p>Valorisation post-money : <%= number_with_delimiter(@firm.post_valuation, delimiter: " ", separator: ",", locale: :fr) %> €</p>
+          <p>Part réelle du capital social ouvert aux nouveaux actionnaires : <%=((@firm.shareholders.where(initial_investor: false).sum('corrected_shares').to_f/@firm.shares.to_f)*100).round(2)%> %</p>
         </div>
       </div>
     </div>

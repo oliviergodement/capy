@@ -37,6 +37,8 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem "pundit"
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'spreadsheet', '~> 0.9.7'
+gem 'pdfkit'
+gem "wkhtmltopdf-binary"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
