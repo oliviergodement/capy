@@ -1,6 +1,6 @@
 class FirmsController < ApplicationController
 
-  before_action :find_firm, only: [:show, :edit, :update, :destroy, :shareholders, :create_shareholder, :ownership, :update_ownership, :refresh_financial_infos]
+  before_action :find_firm, only: [:show, :edit, :update, :destroy, :cap_table, :shareholders, :create_shareholder, :ownership, :update_ownership, :refresh_financial_infos]
   before_action :find_round, only: [:ownership, :update_ownership]
   before_action :authenticate_user!
   respond_to :js, :html
@@ -14,6 +14,13 @@ class FirmsController < ApplicationController
     @shareholders = @firm.shareholders
     if @firm.rounds == 1
       @shares = @shareholders.sum("shares")
+    end
+  end
+
+  def cap_table
+    respond_to do |format|
+      format.xls
+      format.html
     end
   end
 
@@ -81,6 +88,7 @@ class FirmsController < ApplicationController
       compute_new_value(@firm, @round)
       compute_new_shares(@firm, @round)
     end
+
     redirect_to firm_path
   end
 

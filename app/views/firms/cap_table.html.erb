@@ -1,0 +1,86 @@
+<div class="cap-table-container">
+
+<p class="lead">Tableau de capitalisation de <%= @firm.name %></p>
+
+<table class="table table-hover table-bordered table-condensed">
+  <tr class="info">
+    <th>Nom</th>
+    <th>Capital social pre-AK (€)</th>
+    <th>Nombre d'actions pre-AK</th>
+    <th>% capital social pre-AK</th>
+    <th>Souscription AK (€)</th>
+    <th>Nombre d'actions nouvelles</th>
+    <th>Nombre corrigé d'actions (rompus)</th>
+    <th>Montant non souscrit (rompus)</th>
+    <th>Prime d'émission (€)</th>
+    <th>Total valeur nominale par action (€)</th>
+    <th>Montant total souscrit (€)</th>
+    <th>Nombre d'actions post-AK</th>
+    <th>% capital social post-AK</th>
+  </tr>
+   <% @firm.shareholders.order("created_at asc").each do |shareholder| %>
+      <tr>
+        <td><%= shareholder.first_name %> <%= shareholder.last_name %></td>
+        <% if shareholder.initial_investor %>
+          <td><%= number_with_delimiter(shareholder.investments.where(firm_id: @firm.id).first.amount, delimiter: " ", separator: ",", locale: :fr)%></td>
+          <td><%= number_with_delimiter(shareholder.shares, delimiter: " ", separator: ",", locale: :fr) %></td>
+          <td><%=((shareholder.shares.to_f/@firm.shareholders.where(initial_investor: true).sum('shares').to_f)*100).round(2)%> %</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        <% else %>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td><%=number_with_delimiter(shareholder.investments.where(firm_id: @firm.id).first.amount, delimiter: " ", separator: ",", locale: :fr)%> €</td>
+          <td><%=number_with_delimiter(shareholder.shares.round(2), delimiter: " ", separator: ",", locale: :fr)%></td>
+          <td><%=shareholder.corrected_shares%></td>
+          <td><%=number_with_delimiter(shareholder.non_subscribed_amount.round(2), delimiter: " ", separator: ",", locale: :fr)%></td>
+          <td><%=number_with_delimiter((shareholder.corrected_shares * @firm.premium).round(2), delimiter: " ", separator: ",", locale: :fr)%></td>
+          <td><%=number_with_delimiter(shareholder.corrected_shares * @firm.nominal_value, delimiter: " ", separator: ",", locale: :fr) %></td>
+          <td><%=number_with_delimiter((shareholder.corrected_shares * @firm.real_value).round(2), delimiter: " ", separator: ",", locale: :fr) %></td>
+        <% end %>
+        <td><%=shareholder.corrected_shares %></td>
+        <td><%=((shareholder.corrected_shares.to_f/@firm.shares.to_f)*100).round(2)%> %</td>
+      </tr>
+    <% end %>
+    <tr class="active">
+      <td><strong>Total</strong></td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: true).map(&:investments).sum{|investment| investment[0].amount}, delimiter: " ", separator: ",", locale: :fr)%> €</td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: true).sum('shares'), delimiter: " ", separator: ",", locale: :fr)%></td>
+      <td>100.0 %</td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: false).map(&:investments).sum{|investment| investment[0].amount}, delimiter: " ", separator: ",", locale: :fr)%> €</td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: false).sum('shares'), delimiter: " ", separator: ",", locale: :fr) %></td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: false).sum('corrected_shares'), delimiter: " ", separator: ",", locale: :fr) %></td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: false).sum('non_subscribed_amount').round(2), delimiter: " ", separator: ",", locale: :fr)%> €</td>
+      <td><%= number_with_delimiter((@firm.shareholders.where(initial_investor: false).sum('corrected_shares') * @firm.premium).round(2), delimiter: " ", separator: ",", locale: :fr) %> €</td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: false).sum('corrected_shares') * @firm.nominal_value, delimiter: " ", separator: ",", locale: :fr) %> €</td>
+      <td><%= number_with_delimiter((@firm.shareholders.where(initial_investor: false).sum('corrected_shares') * @firm.real_value).round(2), delimiter: " ", separator: ",", locale: :fr) %> €</td>
+      <td><%= number_with_delimiter(@firm.shareholders.sum('corrected_shares'), delimiter: " ", separator: ",", locale: :fr) %></td>
+      <td><%= (@firm.shareholders.sum('corrected_shares')/@firm.shares)*100.round(2) %> %</td>
+    </tr>
+</table>
+
+<div class="row">
+   <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Informations sur l'opération</h3>
+        </div>
+        <div class="panel-body">
+          <p>Montant levé : <%= number_with_delimiter(@firm.rounds.last.amount_raised, delimiter: " ", separator: ",", locale: :fr) %> € (<%= @firm.rounds.last.ownership_offered%>% du capital ouvert)</p>
+          <p>Valeur nominale de l'action : <%= @firm.nominal_value.round(2) %> €</p>
+          <p>Nouveau prix de l'action : <%= number_with_delimiter(@firm.real_value.round(2), locale: :fr) %> €</p>
+          <p>Prime d'émission <%= @firm.premium.round(2) %> €</p>
+          <p>Valorisation pre-money : <%= number_with_delimiter(@firm.pre_valuation, delimiter: " ", separator: ",", locale: :fr) %> €</p>
+          <p>Valorisation post-money : <%= number_with_delimiter(@firm.post_valuation, delimiter: " ", separator: ",", locale: :fr) %> €</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Nom</Data></Cell>
+        <Cell><Data ss:Type="String">Capital social pre-AK (€)</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre d'actions pre-AK</Data></Cell>
+        <Cell><Data ss:Type="String">% capital social pre-AK</Data></Cell>
+        <Cell><Data ss:Type="String">Souscription AK (€)</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre d'actions nouvelles</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre d'actions corrigées (rompus)</Data></Cell>
+        <Cell><Data ss:Type="String">Montant non souscrit (rompus)</Data></Cell>
+        <Cell><Data ss:Type="String">Total valeur nominale par action (€)</Data></Cell>
+        <Cell><Data ss:Type="String">Montant total souscrit (€)</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre d'actions post-AK</Data></Cell>
+        <Cell><Data ss:Type="String">% capital social post-AK</Data></Cell>
+      </Row>
+     <% @firm.shareholders.order("created_at asc").each do |shareholder| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= shareholder.first_name %> <%= shareholder.last_name %></Data></Cell>
+        <% if shareholder.initial_investor %>
+          <Cell><Data ss:Type="Number"><%= shareholder.investments.where(firm_id: @firm.id).first.amount%></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= shareholder.shares %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%=(shareholder.shares.to_f/@firm.shareholders.where(initial_investor: true).sum('shares').to_f).round(4)%></Data></Cell>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+        <% else %>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+          <Cell><Data ss:Type="Number">0</Data></Cell>
+          <Cell><Data ss:Type="Number"><%=shareholder.investments.where(firm_id: @firm.id).first.amount%></Data></Cell>
+          <Cell><Data ss:Type="Number"><%=shareholder.shares%></Data></Cell>
+          <Cell><Data ss:Type="Number"><%=shareholder.corrected_shares%></Data></Cell>
+          <Cell><Data ss:Type="Number"><%=shareholder.non_subscribed_amount.round(2).to_s%></Data></Cell>
+          <Cell><Data ss:Type="Number"><%=shareholder.corrected_shares * @firm.nominal_value %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%=shareholder.corrected_shares * @firm.real_value %></Data></Cell>
+        <% end %>
+        <Cell><Data ss:Type="Number"><%=shareholder.corrected_shares %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%=(shareholder.corrected_shares.to_f/@firm.shares.to_f).round(4)%></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
