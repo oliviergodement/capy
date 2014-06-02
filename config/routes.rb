@@ -21,4 +21,7 @@ Rails.application.routes.draw do
   post 'firm/:id/rounds' => 'rounds#create', as: :create_round
   get 'firms/:id/rounds' => 'rounds#index', as: :rounds
 
+  get 'firms/:id/round/:round_id/subscription_forms' => 'subscription_forms#index', as: :subscription_forms
+  get 'firms/:id/round/:round_id/subscription_form/:shareholder_id/:investment_id' => 'subscription_forms#show', as: :subscription_form
+
 end

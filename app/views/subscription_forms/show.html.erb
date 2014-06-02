@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-sm-4 center-block">
+    <p><%= @firm.name.upcase %></p>
+    <p>Société par actions simplifiée au capital de <%= @firm.initial_capital.round(2).to_s%> euros</p>
+    <p>Siège social : <%= @firm.official_address %></p>
+    <p><%= @firm.rcs %></p> R.C.S <p><%= @firm.court_service%></p>
+    <p>(la « Société »)</p>
+    <br>
+    <p>BULLETIN DE SOUSCRIPTION</p>
+    <p>En date du <%= Date.today %></p>
+    </p>
+  </div>
+
+</div>

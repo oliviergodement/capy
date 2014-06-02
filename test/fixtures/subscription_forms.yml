@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  investment_id: 
+  shareholder_id: 
+  round_id: 
+  firm_id: 
+
+two:
+  investment_id: 
+  shareholder_id: 
+  round_id: 
+  firm_id: 
