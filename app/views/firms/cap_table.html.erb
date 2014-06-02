@@ -22,7 +22,7 @@
       <tr>
         <td><%= shareholder.first_name %> <%= shareholder.last_name %></td>
         <% if shareholder.initial_investor %>
-          <td><%= number_with_delimiter(shareholder.investments.round(2).where(firm_id: @firm.id).first.amount, delimiter: " ", separator: ",", locale: :fr)%></td>
+          <td><%= number_with_delimiter(shareholder.investments.where(firm_id: @firm.id).first.amount.round(2), delimiter: " ", separator: ",", locale: :fr)%></td>
           <td><%= number_with_delimiter(shareholder.shares.round(2), delimiter: " ", separator: ",", locale: :fr).round(2) %></td>
           <td><%=((shareholder.shares.to_f/@firm.shareholders.where(initial_investor: true).sum('shares').to_f)*100).round(2)%> %</td>
           <td>0</td>
