@@ -74,8 +74,8 @@
         <div class="panel-body">
           <p>Montant levé : <%= number_with_delimiter(@firm.rounds.last.amount_raised, delimiter: " ", separator: ",", locale: :fr) %> € (<%= @firm.rounds.last.ownership_offered%>% du capital ouvert)</p>
           <p>Valeur nominale de l'action : <%= @firm.nominal_value.round(2) %> €</p>
-          <p>Nouveau prix de l'action : <%= number_with_delimiter(@firm.real_value.round(2), locale: :fr) %> €</p>
           <p>Prime d'émission <%= @firm.premium.round(2) %> €</p>
+          <p>Nouveau prix de l'action : <%= number_with_delimiter(@firm.real_value.round(2), locale: :fr) %> €</p>
           <p>Valorisation pre-money : <%= number_with_delimiter(@firm.pre_valuation.round(2), delimiter: " ", separator: ",", locale: :fr) %> €</p>
           <p>Valorisation post-money : <%= number_with_delimiter(@firm.post_valuation.round(2), delimiter: " ", separator: ",", locale: :fr) %> €</p>
           <p>Part réelle du capital social ouvert aux nouveaux actionnaires : <%=((@firm.shareholders.where(initial_investor: false).sum('corrected_shares').to_f/@firm.shares.to_f)*100).round(2)%> %</p>

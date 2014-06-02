@@ -3,13 +3,17 @@
   <div class="col-sm-5">
     <h1>Société '<%= @firm.name %>'</h1>
   </div>
-  <div class="col-sm-7">
-    <%=button_to "Editer les détails de la société", edit_firm_path(@firm), method: 'get', class: "btn btn-primary pull-right" %>
+  <div class="col-sm-4">
     <% if @firm.rounds.count > 1 %>
-      <%= button_to "Voir l'opération en cours", rounds_path(@firm), method: 'get', class: "btn btn-success center-block"%>
+      <%= button_to "Voir l'opération en cours", rounds_path(@firm), method: 'get', class: "btn btn-lg btn-success center-block"%>
     <% else %>
       <%= button_to "Démarrer une augmentation de capital", new_round_path(@firm), method: 'get', class: "btn btn-success center-block"%>
     <% end %>
+  </div>
+  <div class="col-sm-3">
+    <%=button_to "Editer les détails de la société", edit_firm_path(@firm), method: 'get', class: "btn btn-sm btn-primary" %>
+    <br>
+    <%= button_to "Supprimer la société", firm_path(@firm), method: 'delete', class: "btn btn-sm btn-danger"%>
   </div>
 </div>
 <hr>

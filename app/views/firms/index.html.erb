@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-6">
-    <h1>Liste des sociétés</h1>
+    <h2>Liste des sociétés ajoutées par <%= current_user.email %></h2>
   </div>
   <div class="col-sm-6">
     <%= button_to "Ajouter une société", new_firm_path, method: 'get', class: "btn btn-success pull-right"%>
@@ -10,7 +10,6 @@
 <table class="table table-hover firms-index-table">
   <th>Société</th>
   <th>Dernière édition</th>
-  <th></th>
   <th></th>
   <th></th>
   <% @firms.order("updated_at desc").each do |firm| %>
@@ -24,8 +23,7 @@
           <td><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-primary center-block"%>
         <% end %>
         </td>
-        <td><%= button_to "Editer les détails", edit_firm_path(firm), method: 'get', class: "btn btn-xs btn-default pull-right" %></td>
-        <td><%= button_to "Supprimer la société", firm_path(firm), method: 'delete', class: "btn btn-xs btn-danger pull-right"%></td>
+        <td><%= button_to "Editer les détails", edit_firm_path(firm), method: 'get', class: "btn btn-sm btn-default pull-right" %></td>
       </tr>
     <% end %>
   <% end %>

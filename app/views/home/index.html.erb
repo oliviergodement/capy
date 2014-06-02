@@ -1,10 +1,15 @@
-<h1>Bienvenue sur Capy</h1>
+  <div class="jumbotron col-sm-10 col-sm-offset-1" style="margin-top: 50px;">
+    <h1>Capy</h1>
+    <p>Générez simplement vos documents financiers, sans utiliser Excel et sans perdre de temps</p>
 
-<div class="row">
-  <div class="col-sm-offset-8">
-    <p class="lead">
-      <%= link_to "Voir la liste des sociétés", firms_path %>
-    <p class="lead">
-
+      <div class="pull-left col-sm-offset-4">
+        <p>
+          <%= button_to "Ajouter une nouvelle société", new_firm_path, method: 'get', class: "btn btn-success btn-lg" %>
+        </p>
+      </div>
+      <div class="pull-right">
+        <p>
+          <%= button_to "Voir les sociétés déjà ajoutées", firms_path, method: 'get', class: "btn btn-primary btn-lg" %>
+        </p>
+      </div>
   </div>
-</div>
