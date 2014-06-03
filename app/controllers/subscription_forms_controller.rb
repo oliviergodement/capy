@@ -1,7 +1,7 @@
-    require 'rubygems'
-    require 'rtf'
+require 'rubygems'
+require 'rtf'
 
-    include RTF
+include RTF
 
 class SubscriptionFormsController < ApplicationController
 
@@ -15,16 +15,10 @@ class SubscriptionFormsController < ApplicationController
     @round = Round.find(params[:round_id])
     @investment = Investment.find(params[:investment_id])
     @shareholder = Shareholder.find(params[:shareholder_id])
-
     generate_subscription_form
-
-
-
   end
 
   def generate_subscription_form
-
-
     styles = {}
     styles['HEADER'] = CharacterStyle.new
     styles['HEADER'].bold      = true
@@ -33,9 +27,14 @@ class SubscriptionFormsController < ApplicationController
     styles['HEADER-CENTER'].justification = ParagraphStyle::CENTER_JUSTIFY
     styles['NORMAL'] = ParagraphStyle.new
     styles['NORMAL'].justification = ParagraphStyle::FULL_JUSTIFY
+    # pas encore utilisé
+    styles['NORMAL_SIZE'] = CharacterStyle.new
+    styles['NORMAL_SIZE'].font_size = 20
     styles['TITLES'] = CharacterStyle.new
     styles['TITLES'].bold      = true
     styles['TITLES'].underline = true
+    styles['INDENTED'] = ParagraphStyle.new
+    styles['INDENTED'].left_indent = 400
 
     form = Document.new(Font.new(Font::ROMAN, 'Times New Roman'))
 
@@ -72,11 +71,105 @@ class SubscriptionFormsController < ApplicationController
        p << "par l'émission de #{@firm.shareholders.sum('corrected_shares')} actions ordinaires nouvelles de "
        p << "la Société de #{@firm.nominal_value.round(2)} € de valeur nominale chacune"
 
-       ## il me faut :
-       #   - new shares (rounds)
+       p << "Il a également été décidé, conformément aux dispositions des articles L. 225-135 et L. 225-138 du Code de commerce, de supprimer le droit préférentiel de souscription des Associés pour la totalité de l’augmentation de capital social, et ainsi d’en réserver la souscription aux personnes nommément désignées suivantes :"
+       p.line_break
     end
 
-    file_name = "#{Rails.root}/bon_souscription_#{@firm.name.strip}_#{@shareholder.last_name}.rtf"
+    form.paragraph(styles['INDENTED']) do |p|
+      @firm.shareholders.where(initial_investor: false).each do |shareholder|
+        p << "- à hauteur de #{shareholder.investments.last.real_amount} €, soit #{shareholder.corrected_shares} actions ordinaires nouvelles de la Société, à #{shareholder.first_name} #{shareholder.last_name}, né(e) le #{shareholder.birth_date}, de nationalité #{shareholder.nationality} et résidant à #{shareholder.address}"
+        p.line_break
+        p.line_break
+      end
+    end
+
+    form.paragraph(styles['NORMAL']) do |p|
+      p << "Les actions ordinaires nouvelles sont émises au prix unitaire d’environ #{@firm.real_value.round(2)} €, soit avec une prime d’émission d’environ #{@firm.premium.round(2)} €."
+      p.line_break
+      p.line_break
+      p << "Les actions ordinaires nouvelles doivent être libérées en totalité lors de la souscription par versement en numéraire."
+      p.line_break
+      p.line_break
+      p << "Les actions ordinaires nouvelles porteront jouissance à compter de leur émission et seront dès leur création assimilées aux actions ordinaires anciennes, et soumises à toutes les dispositions des statuts et aux décisions collectives des Associés."
+      p.line_break
+      p.line_break
+      p << "Les actions ordinaires nouvelles seront inscrites en compte le jour de la réalisation de l’augmentation de capital et négociables à compter du même jour dans les conditions prévues par les statuts de la Société."
+      p.line_break
+      p.line_break
+      p << "Les bulletins de souscription et versements seront reçus au siège social à compter de la décision des Associés de la Société et jusqu’au 15 juin 2014 inclus [Au moins 5 jours de bourse à dater de l'ouverture de la souscription – L. 225-141 du Code de commerce], au plus tard. Le délai de souscription se trouvera clos par anticipation dès que l’augmentation aura été intégralement souscrite et les actions libérées de la totalité du prix d’émission."
+      p.line_break
+      p.line_break
+    end
+
+    form.paragraph(styles['NORMAL']) do |p|
+      p.apply(styles['TITLES']) do |s|
+        s << "2.  Versement des fonds"
+        s.line_break
+        s.line_break
+      end
+       p << "Les fonds correspondant à la libération de la souscription seront versés sur le compte bancaire "
+       p << "n° #{@firm.bank_account} ouvert au nom de la Société auprès de l’agence bancaire #{@firm.bank_agency} de la #{@firm.bank_name} sise #{@firm.bank_agency_address}, qui établira le certificat du dépositaire. Les fonds y seront conservés jusqu’à la réalisation définitive de l’augmentation de capital."
+    end
+
+    form.paragraph(styles['NORMAL']) do |p|
+      p.apply(styles['TITLES']) do |s|
+        s << "3.  Souscription"
+        s.line_break
+        s.line_break
+      end
+       p << "Je, soussigné[e] ;"
+       p.line_break
+       p.line_break
+       p << "#{@shareholder.first_name} #{@shareholder.last_name}, né[e] le #{@shareholder.birth_date} à REMPLIR, et résidant à #{@shareholder.address} ;"
+       p.line_break
+       p.line_break
+       p << "bénéficiaire, à la suite de la suppression à son profit du droit préférentiel de souscription des Associés, du droit à la souscription de #{@shareholder.corrected_shares} actions ordinaires nouvelles de la Société ;"
+       p.line_break
+       p.line_break
+       p << "après avoir pris connaissance des statuts de la Société, des conditions et des modalités de l’émission de #{@round.shares_issued} actions ordinaires nouvelles composant l’intégralité de l’augmentation de capital en numéraire sus-énoncée ;"
+       p.line_break
+       p.line_break
+       p << "déclare"
+       p.line_break
+       p.line_break
+       p.line_break
+       p.line_break
+    end
+
+    form.paragraph(styles['INDENTED']) do |p|
+      p << "− souscrire à #{@shareholder.corrected_shares} actions ordinaires nouvelles de la Société de #{@firm.nominal_value.round(2)} € de valeur nominale chacune, soit la totalité de la quote-part m’étant réservée, émises au prix de souscription d’environ #{@firm.real_value.round(2)} € chacune (prime d’émission incluse), soit un prix total de #{(@shareholder.corrected_shares * @firm.real_value).round(2)} € ;"
+      p.line_break
+      p.line_break
+      p << "− s’engager à libérer en numéraire lors de la souscription le montant correspondant à l’intégralité des actions souscrites, soit la somme de #{(@shareholder.corrected_shares * @firm.real_value).round(2)} € ;"
+      p.line_break
+      p.line_break
+    end
+
+    form.paragraph(styles['NORMAL']) do |p|
+      p << "Je reconnais que la présente souscription a un caractère purement privé et a lieu sans offre au public."
+      p.line_break
+      p << "Je déclare qu’un exemplaire sur papier libre du présent bulletin de souscription m’a été remis."
+      p.line_break
+      p.line_break
+      p.line_break
+      p.line_break
+      p << "Fait à _________________________, le _______________________ 2014"
+      p.line_break
+      p.line_break
+      p << "En deux (2) exemplaires originaux dont un est resté en ma possession,"
+      p.line_break
+      p.line_break
+      p.line_break
+      p.line_break
+      p.line_break
+      p.line_break
+      p << "Veuillez faire précéder votre signature de la mention manuscrite suivante :"
+      p.line_break
+      p << "« Bon pour souscription à #{@shareholder.corrected_shares} actions ordinaires nouvelles de la Société de #{@firm.nominal_value.round(2)} € de valeur nominale chacune »"
+    end
+
+
+    file_name = "#{Rails.root}/bon_souscription_#{@firm.name.strip}_#{@shareholder.last_name}.doc"
     File.open(file_name, 'w') {|file| file.write(form.to_rtf)}
     send_file file_name
 

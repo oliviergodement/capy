@@ -111,10 +111,13 @@ class FirmsController < ApplicationController
       shareholder.update_attribute(:shares, shareholder.investments.last.amount / firm.real_value)
       shareholder.update_attribute(:corrected_shares, shareholder.shares.floor)
       shareholder.update_attribute(:non_subscribed_amount, (shareholder.shares - shareholder.corrected_shares)*firm.real_value)
+      Investment.where(round_id: round.id).where(shareholder_id: shareholder.id).last.update_attribute(:real_amount, (shareholder.corrected_shares * @firm.real_value).round(2))
       new_outstanding_shares += shareholder.corrected_shares
     end
+
     firm.update_attribute(:shares, new_outstanding_shares)
     round.update_attribute(:real_amount_raised, (firm.shareholders.where(initial_investor: false).sum('corrected_shares') * @firm.real_value).round(2))
+    round.update_attribute(:shares_issued, @firm.shareholders.where(initial_investor: false).sum('corrected_shares'))
   end
 
   private

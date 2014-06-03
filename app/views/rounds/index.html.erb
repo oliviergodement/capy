@@ -7,8 +7,11 @@
   <% @rounds.each do |round| %>
     <tr>
       <% if !round.initial_round %>
-        <td><%= link_to round.name, show_round_path(@firm.id, round.id) %><span class="label label-primary">Primary</span>
+        <td><%= link_to round.name, show_round_path(@firm.id, round.id) %>       <span class="label label-primary">AK</span>
         </td>
+      <% else %>
+        <td><%= link_to round.name, show_round_path(@firm.id, round.id) %></span>
+      <% end %>
       <td><%=round.created_at.strftime("%d %B %Y à %H:%M")  %></td>
       <td><%=round.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
     </tr>
