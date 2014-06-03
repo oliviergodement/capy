@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140602164832) do
+ActiveRecord::Schema.define(version: 20140603094131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20140602164832) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "initial_round"
+    t.decimal  "real_amount_raised", precision: 15, scale: 7
   end
 
   add_index "rounds", ["firm_id"], name: "index_rounds_on_firm_id", using: :btree

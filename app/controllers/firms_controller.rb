@@ -114,6 +114,7 @@ class FirmsController < ApplicationController
       new_outstanding_shares += shareholder.corrected_shares
     end
     firm.update_attribute(:shares, new_outstanding_shares)
+    round.update_attribute(:real_amount_raised, (firm.shareholders.where(initial_investor: false).sum('corrected_shares') * @firm.real_value).round(2))
   end
 
   private
