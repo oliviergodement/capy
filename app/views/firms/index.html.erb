@@ -7,9 +7,16 @@
   </div>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-body">
+    Voici les sociétés que vous avez ajoutées et les opérations d'augmentation de capital que vous avez déjà effectué.
+  </div>
+</div>
+
 <table class="table table-hover firms-index-table">
   <th>Société</th>
   <th>Dernière édition</th>
+  <th>Opération effectuée</th>
   <th></th>
   <th></th>
   <% @firms.order("updated_at desc").each do |firm| %>
@@ -17,6 +24,13 @@
       <tr>
         <td><h4><%=link_to firm.name, firm_path(firm)%></h4></td>
         <td><%=firm.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
+        <td>
+          <% if firm.rounds.count > 1 %>
+          <%= link_to "Oui", show_round_path(firm, Round.where(firm_id: firm.id).last)%>
+          <% else %>
+          Non
+          <% end%>
+        </td>
         <% if firm.rounds.count > 1 %>
           <td><%= button_to "Voir l'opération en cours", show_round_path(firm, Round.where(firm_id: firm.id).last), method: 'get', class: "btn btn-sm btn-primary center-block"%></td>
         <% else %>

@@ -5,7 +5,7 @@
   </div>
   <div class="col-sm-4">
     <% if @firm.rounds.count > 1 %>
-      <%= button_to "Voir l'opération en cours", rounds_path(@firm), method: 'get', class: "btn btn-lg btn-success center-block"%>
+      <%= button_to "Voir l'opération en cours", show_round_path(@firm, Round.where(firm_id: @firm.id).last), method: 'get', class: "btn btn-lg btn-success center-block"%>
     <% else %>
       <%= button_to "Démarrer une augmentation de capital", new_round_path(@firm), method: 'get', class: "btn btn-success center-block"%>
     <% end %>
@@ -43,7 +43,7 @@
     <div class="col-sm-4">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Infos post-levée</h3>
+          <h3 class="panel-title">Infos sur la levée</h3>
         </div>
         <div class="panel-body">
           <p>
