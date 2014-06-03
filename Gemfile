@@ -39,7 +39,8 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'spreadsheet', '~> 0.9.7'
 gem 'pdfkit'
 gem "wkhtmltopdf-binary"
-
+gem 'clbustos-rtf'
+gem 'figaro'
 
 
 

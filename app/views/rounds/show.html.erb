@@ -13,6 +13,9 @@
 <div class="col-sm-4">
 <%= button_to "Voir le tableau de capi", cap_table_path(@firm.id), method: 'get', class: 'btn btn-success' %>
 </div>
+<div class="col-sm-4">
+<%= button_to "Voir les bulletins de souscription", subscription_forms_path(@firm.id, @round.id), method: 'get', class: 'btn btn-success' %>
+</div>
 
 </div>
 

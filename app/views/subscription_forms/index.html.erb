@@ -1,0 +1,11 @@
+<h1>Voir les bons de souscription</h1>
+
+<table>
+  <th></th>
+  <% @round.investments.each do |investment| %>
+    <tr>
+      <td><%= Shareholder.find(investment.shareholder_id).first_name %> <%= Shareholder.find(investment.shareholder_id).last_name %></td>
+      <td><%= link_to "Télécharger le bulletin de souscription", subscription_form_path(@firm.id, @round.id, Shareholder.find(investment.shareholder_id).id, investment.id) %></td>
+    </tr>
+  <% end %>
+</table>

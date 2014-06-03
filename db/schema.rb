@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140530103005) do
+ActiveRecord::Schema.define(version: 20140603094131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20140530103005) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "initial_round"
+    t.decimal  "real_amount_raised", precision: 15, scale: 7
   end
 
   add_index "rounds", ["firm_id"], name: "index_rounds_on_firm_id", using: :btree
@@ -99,6 +100,20 @@ ActiveRecord::Schema.define(version: 20140530103005) do
   end
 
   add_index "shareholders", ["firm_id"], name: "index_shareholders_on_firm_id", using: :btree
+
+  create_table "subscription_forms", force: true do |t|
+    t.integer  "investment_id"
+    t.integer  "shareholder_id"
+    t.integer  "round_id"
+    t.integer  "firm_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscription_forms", ["firm_id"], name: "index_subscription_forms_on_firm_id", using: :btree
+  add_index "subscription_forms", ["investment_id"], name: "index_subscription_forms_on_investment_id", using: :btree
+  add_index "subscription_forms", ["round_id"], name: "index_subscription_forms_on_round_id", using: :btree
+  add_index "subscription_forms", ["shareholder_id"], name: "index_subscription_forms_on_shareholder_id", using: :btree
 
   create_table "users", force: true do |t|
     t.datetime "created_at"
