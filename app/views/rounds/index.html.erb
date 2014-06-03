@@ -6,7 +6,9 @@
   <th>Dernière miseà jour</th>
   <% @rounds.each do |round| %>
     <tr>
-      <td><%= link_to round.name, show_round_path(@firm.id, round.id) %></td>
+      <% if !round.initial_round %>
+        <td><%= link_to round.name, show_round_path(@firm.id, round.id) %><span class="label label-primary">Primary</span>
+        </td>
       <td><%=round.created_at.strftime("%d %B %Y à %H:%M")  %></td>
       <td><%=round.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
     </tr>
