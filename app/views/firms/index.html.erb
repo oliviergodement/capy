@@ -18,7 +18,7 @@
         <td><h4><%=link_to firm.name, firm_path(firm)%></h4></td>
         <td><%=firm.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
         <% if firm.rounds.count > 1 %>
-          <td><%= button_to "Voir l'opération en cours", rounds_path(firm), method: 'get', class: "btn btn-sm btn-primary center-block"%></td>
+          <td><%= button_to "Voir l'opération en cours", show_round_path(firm, Round.where(firm_id: firm.id).last), method: 'get', class: "btn btn-sm btn-primary center-block"%></td>
         <% else %>
           <td><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-primary center-block"%>
         <% end %>
