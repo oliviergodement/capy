@@ -41,6 +41,8 @@ gem 'pdfkit'
 gem "wkhtmltopdf-binary"
 gem 'clbustos-rtf'
 gem 'figaro', '1.0.0.rc1'
+gem 'paperclip', github: 'thoughtbot/paperclip'
+gem 'aws-sdk'
 
 
 

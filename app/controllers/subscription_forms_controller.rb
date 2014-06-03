@@ -18,7 +18,7 @@ class SubscriptionFormsController < ApplicationController
 
     generate_subscription_form
 
-    redirect_to subscription_forms_path(@firm, @round)
+
 
   end
 
@@ -76,7 +76,10 @@ class SubscriptionFormsController < ApplicationController
        #   - new shares (rounds)
     end
 
-    File.open('subscription_form.rtf', 'w') {|file| file.write(form.to_rtf)}
+    file_name = "#{Rails.root}/bon_souscription_#{@firm.name.strip}_#{@shareholder.last_name}.rtf"
+    File.open(file_name, 'w') {|file| file.write(form.to_rtf)}
+    send_file file_name
+
   end
 
 end
