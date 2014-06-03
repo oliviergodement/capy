@@ -61,7 +61,7 @@
       <td><%= number_with_delimiter((@firm.shareholders.where(initial_investor: false).sum('corrected_shares') * @firm.nominal_value).round(2), delimiter: " ", separator: ",", locale: :fr) %> €</td>
       <td><%= number_with_delimiter((@firm.shareholders.where(initial_investor: false).sum('corrected_shares') * @firm.real_value).round(2), delimiter: " ", separator: ",", locale: :fr) %> €</td>
       <td><%= number_with_delimiter(@firm.shareholders.sum('corrected_shares'), delimiter: " ", separator: ",", locale: :fr) %></td>
-      <td><%= (@firm.shareholders.sum('corrected_shares')/@firm.shares)*100.round(2) %> %</td>
+      <td><%=((@firm.shareholders.sum('corrected_shares').to_f/@firm.shares.to_f)*100).round(2)%> %</td>
     </tr>
 </table>
 

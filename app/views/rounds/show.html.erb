@@ -3,20 +3,16 @@
 <p>Société : <%= @firm.name %><p>
 <% unless @round.initial_round %>
   <p><%= @round.ownership_offered %>% ouvert</p>
-  <p>Montant levé : <%=@round.amount_raised%></p>
+  <p>Montant levé : <%=@round.amount_raised%> €</p>
 <% end%>
 
 <div class="row">
-<div class="col-sm-4">
-<%= button_to "Modifier les infos des participants au round", new_shareholder_path(@firm.id, @round.id), method: 'get', class: 'btn btn-primary' %>
-</div>
-<div class="col-sm-4">
-<%= button_to "Voir le tableau de capi", cap_table_path(@firm.id), method: 'get', class: 'btn btn-success' %>
-</div>
-<div class="col-sm-4">
-<%= button_to "Voir les bulletins de souscription", subscription_forms_path(@firm.id, @round.id), method: 'get', class: 'btn btn-success' %>
-</div>
-
+  <div class="col-sm-4">
+  <%= button_to "Voir le tableau de capitalisation", cap_table_path(@firm.id), method: 'get', class: 'btn btn-success' %>
+  </div>
+  <div class="col-sm-4">
+  <%= button_to "Voir les bulletins de souscription", subscription_forms_path(@firm.id, @round.id), method: 'get', class: 'btn btn-success' %>
+  </div>
 </div>
 
 <h3>Liste des participants à l'opération</h3>
