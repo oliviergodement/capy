@@ -217,7 +217,7 @@ DEPENDENCIES
   devise
   devise-i18n
   faker
-  figaro
+  figaro (= 1.0.0.rc1)
   jbuilder (~> 2.0)
   jquery-rails
   pdfkit
