@@ -1,19 +1,20 @@
 
 <div class="row">
   <div class="col-sm-5">
-    <h1>Société '<%= @firm.name %>'</h1>
+    <div class="row">
+      <h1>Société '<%= @firm.name %>'</h1>
+    </div>
+    <div class="row">
+      <p><%=link_to "Editer les détails de la société", edit_firm_path(@firm), method: 'get' %></p>
+    </div>
   </div>
-  <div class="col-sm-4">
+
+  <div class="col-sm-4 pull-right">
     <% if @firm.rounds.count > 1 %>
       <%= button_to "Voir l'opération en cours", show_round_path(@firm, Round.where(firm_id: @firm.id).last), method: 'get', class: "btn btn-lg btn-success center-block"%>
     <% else %>
       <%= button_to "Démarrer une augmentation de capital", new_round_path(@firm), method: 'get', class: "btn btn-success center-block"%>
     <% end %>
-  </div>
-  <div class="col-sm-3">
-    <%=button_to "Editer les détails de la société", edit_firm_path(@firm), method: 'get', class: "btn btn-sm btn-primary" %>
-    <br>
-    <%= button_to "Supprimer la société", firm_path(@firm), method: 'delete', class: "btn btn-sm btn-danger"%>
   </div>
 </div>
 <hr>
@@ -48,7 +49,7 @@
         <div class="panel-body">
           <p>
           Voir le tableau de capitalisation : <%= link_to "Format Web", cap_table_path(format: "html") %></p>
-          <p>Télécharger le tableau de capitalisation : <%= link_to "Format Excel", cap_table_path(format: "xls") %>
+          <p>Télécharger le tableau de capitalisation : <%= link_to "Format Excel", cap_table_path(format: "xls") %></p>
           <p>Montant levé : <%= number_with_delimiter(@firm.rounds.last.amount_raised, delimiter: " ", separator: ",", locale: :fr) %> € (<%= @firm.rounds.last.ownership_offered%>% du capital ouvert)</p>
           <p>Nouveau prix de l'action : <%= number_with_delimiter(@firm.real_value.round(2), locale: :fr) %> €</p>
           <p>Prime d'émission <%= @firm.premium.round(2) %> €</p>
@@ -117,3 +118,8 @@
     <td><%=((@firm.shareholders.sum('corrected_shares').to_f/@firm.shares.to_f)*100).round(2)%> %</td>
   </tr>
 </table>
+<div class="row">
+  <div class="pull-right">
+    <p><%= link_to "Supprimer la société", firm_path(@firm), method: 'delete'%></p>
+  </div>
+</div>

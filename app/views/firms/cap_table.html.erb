@@ -1,6 +1,13 @@
 <div class="cap-table-container">
 
-<p class="lead">Tableau de capitalisation de <%= @firm.name %></p>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Tableau de capitalisation de <%= @firm.name %></p>
+  </div>
+  <div class="col-sm-3 pull-right">
+    <%= button_to "Télécharger au format Excel", cap_table_path(format: "xls"), method: 'get', class: 'btn btn-success' %>
+  </div>
+</div>
 
 <table class="table table-hover table-bordered table-condensed">
   <tr class="info">

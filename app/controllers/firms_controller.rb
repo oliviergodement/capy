@@ -89,10 +89,10 @@ class FirmsController < ApplicationController
       compute_new_value(@firm, @round)
       compute_new_shares(@firm, @round)
     end
-    if @firm.rounds.count > 1
+    if @firm.rounds.last.initial_round
       redirect_to new_round_path(@firm)
     else
-      redirect_to firm_path(@firm)
+      redirect_to show_round_path(@firm.id, @round.id)
     end
 
   end

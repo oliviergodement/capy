@@ -9,14 +9,14 @@
   <body>
     <%= render 'layouts/navbar' %>
     <div class="container">
-      <% flash.each do |name, msg| %>
-        <% if msg.count > 1 %>
-          <% msg.each do |alert_msg| %>
-            <div class ="alert alert-<%=name%>"><%= content_tag :div, alert_msg %></div>
-          <% end %>
-        <% else %>
-          <div class ="alert alert-<%=name%>"><%= content_tag :div, msg %></div>
-        <% end %>
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>">
+            <ul>
+              <li>
+                <%= value %>
+              </li>
+            </ul>
+        </div>
       <% end %>
       <%= yield %>
     </div>
