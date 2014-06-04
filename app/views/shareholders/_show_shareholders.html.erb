@@ -1,4 +1,4 @@
-<% if @firm.shareholders.where(initial_investor: false).any? %>
+<% if @firm.shareholders.any? %>
     <% if @firm.rounds.count > 1 %>
       <legend>Liste des nouveaux actionnaires</legend>
     <% else %>
