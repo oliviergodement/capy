@@ -55,7 +55,7 @@ gem 'aws-sdk'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-gem 'unicorn', group: :development
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
