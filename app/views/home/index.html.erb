@@ -1,15 +1,19 @@
   <div class="jumbotron col-sm-10 col-sm-offset-1" style="margin-top: 50px;">
     <h1>Capy</h1>
-    <p>Générez simplement un tableau de capitalisation et des bons de souscription, sans utiliser de formule Excel ni réécrire le même document plusieurs fois.</p>
+    <hr>
+    <p>Générez simplement un tableau de capitalisation et des bons de souscription.</p>
+    <p>Sans formule Excel.</p>
 
-      <div class="pull-left col-sm-offset-4">
+      <div class="pull-right col-sm-offset-3">
         <p>
           <%= button_to "Ajouter une nouvelle société", new_firm_path, method: 'get', class: "btn btn-success btn-lg" %>
         </p>
       </div>
-      <div class="pull-right">
-        <p>
-          <%= button_to "Voir les sociétés déjà ajoutées", firms_path, method: 'get', class: "btn btn-primary btn-lg" %>
-        </p>
-      </div>
+      <% if user_signed_in? %>
+        <div class="pull-right">
+          <p>
+            <%= button_to "Voir les sociétés déjà ajoutées", firms_path, method: 'get', class: "btn btn-primary btn-lg" %>
+          </p>
+        </div>
+      <% end %>
   </div>

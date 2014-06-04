@@ -6,6 +6,7 @@ gem 'rails_12factor', group: :production
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
+gem 'rails-i18n', '~> 4.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -37,8 +38,12 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem "pundit"
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'spreadsheet', '~> 0.9.7'
+
 gem 'pdfkit'
-gem "wkhtmltopdf-binary"
+gem 'wkhtmltopdf-heroku', group: :production
+gem 'wkhtmltopdf-binary', group: :development
+
+
 gem 'clbustos-rtf'
 gem 'figaro', '1.0.0.rc1'
 gem 'paperclip', github: 'thoughtbot/paperclip'

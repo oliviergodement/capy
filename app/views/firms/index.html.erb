@@ -3,41 +3,41 @@
     <h2>Liste des sociétés ajoutées par <%= current_user.email %></h2>
   </div>
   <div class="col-sm-6">
-    <%= button_to "Ajouter une société", new_firm_path, method: 'get', class: "btn btn-success pull-right"%>
+    <%= button_to "Ajouter une nouvelle société", new_firm_path, method: 'get', class: "btn btn-lg btn-success pull-right"%>
   </div>
 </div>
 
 <div class="panel panel-default">
   <div class="panel-body">
-    Voici les sociétés que vous avez ajoutées et les opérations d'augmentation de capital que vous avez déjà effectué.
+    Une fois une société ajoutée, vous pouvez démarrer une augmentation de capital et générer les documents nécessaires.
   </div>
 </div>
 
 <table class="table table-hover firms-index-table">
   <th>Société</th>
   <th>Dernière édition</th>
-  <th>Opération effectuée</th>
-  <th></th>
+  <th class="text-center">Tableau de capitalisation</th>
+  <th class="text-center">Bulletins de souscription</th>
   <th></th>
   <% @firms.order("updated_at desc").each do |firm| %>
     <% if firm.user_id == current_user.id %>
       <tr>
         <td><h4><%=link_to firm.name, firm_path(firm)%></h4></td>
         <td><%=firm.updated_at.strftime("%d %B %Y à %H:%M")  %></td>
-        <td>
-          <% if firm.rounds.count > 1 %>
-          <%= link_to "Oui", show_round_path(firm, Round.where(firm_id: firm.id).last)%>
-          <% else %>
-          Non
-          <% end%>
-        </td>
         <% if firm.rounds.count > 1 %>
-          <td><%= button_to "Voir l'opération en cours", show_round_path(firm, Round.where(firm_id: firm.id).last), method: 'get', class: "btn btn-sm btn-primary center-block"%></td>
+          <td>
+            <%= button_to "Voir le tableau", cap_table_path(firm), method: 'get', class: "btn btn-sm btn-primary center-block"%>
+          </td>
+          <td>
+            <%= button_to "Voir les bulletins", subscription_forms_path(firm, Round.where(firm_id: firm.id).last), method: 'get', class: "btn btn-sm btn-primary center-block" %>
+          </td>
+          <td><%= button_to "Voir les détails de l'opération", show_round_path(firm, Round.where(firm_id: firm.id).last), method: 'get', class: "btn btn-sm btn-success center-block"%></td>
         <% else %>
-          <td><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-primary center-block"%>
+          <td></td>
+          <td></td>
+          <td><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-success center-block"%>
         <% end %>
         </td>
-        <td><%= button_to "Editer les détails", edit_firm_path(firm), method: 'get', class: "btn btn-sm btn-default pull-right" %></td>
       </tr>
     <% end %>
   <% end %>

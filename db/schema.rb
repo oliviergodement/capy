@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140603135602) do
+ActiveRecord::Schema.define(version: 20140604094106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,9 @@ ActiveRecord::Schema.define(version: 20140603135602) do
     t.integer  "corrected_shares"
     t.float    "shares"
     t.decimal  "non_subscribed_amount"
+    t.string   "postal_code"
+    t.string   "city"
+    t.string   "country"
   end
 
   add_index "shareholders", ["firm_id"], name: "index_shareholders_on_firm_id", using: :btree

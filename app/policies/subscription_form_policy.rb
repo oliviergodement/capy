@@ -1,4 +1,4 @@
-class FirmPolicy < ApplicationPolicy
+class SubscriptionFormPolicy < ApplicationPolicy
 
   class Scope < Struct.new(:user, :scope)
     def resolve
@@ -19,14 +19,6 @@ class FirmPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user_id == user.id
-  end
-
-  def ownership?
-    record.user_id == user.id
-  end
-
-  def cap_table?
     record.user_id == user.id
   end
 
