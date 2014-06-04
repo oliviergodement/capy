@@ -173,10 +173,9 @@ class SubscriptionFormsController < ApplicationController
     end
 
 
-    file_name = "#{Rails.root}/bon_souscription_#{@firm.name.strip}_#{@shareholder.last_name}.doc"
-    File.open(file_name, 'w') {|file| file.write(form.to_rtf)}
-    send_file file_name
-    delete file_name
+    file_name = "bon_souscription_#{@firm.name.strip}_#{@shareholder.last_name}.doc"
+    send_data form.to_rtf, filename: file_name
+
 
   end
 

@@ -1,26 +1,30 @@
-<hr>
-<% if @firm.shareholders.any? %>
-  <h3>Liste des nouveaux actionnaires</h3>
+<% if @firm.shareholders.where(initial_investor: false).any? %>
+    <% if @firm.rounds.count > 1 %>
+      <legend>Liste des nouveaux actionnaires</legend>
+    <% else %>
+      <legend>Liste des actionnaires initiaux</legend>
+    <% end %>
   <table class="table table-hover">
     <th>Prénom</th>
     <th>Nom</th>
-    <th>Adresse</th>
-    <th>Date de naissance</th>
-    <th>Nationalité</th>
     <th></th>
   <% @firm.shareholders.each do |shareholder| %>
     <% if (@round.initial_round && shareholder.initial_investor) || (!@round.initial_round && !shareholder.initial_investor) %>
         <tr>
           <td><%=shareholder.first_name%></td>
           <td><%=shareholder.last_name%></td>
-          <td><%=shareholder.address%></td>
-          <td><%=shareholder.birth_date%></td>
-          <td><%=shareholder.nationality%></td>
-          <td><%= link_to 'Delete shareholder', delete_shareholder_path(@firm, @round.id, shareholder), method: 'delete', remote: true %></td>
+          <td><%= link_to 'Supprimer', delete_shareholder_path(@firm, @round.id, shareholder), method: 'delete', remote: true %></td>
         </tr>
     <% end %>
   <%end%>
   </table>
-
-  <%= button_to 'Définir la répartition du capital entre actionnaires', ownership_path(@firm, @round.id), method: 'get', class: "btn btn-primary add-ownership-button" %>
+  <hr>
+<div class="col-sm-8 col-sm-offset-2">
+  <p class="text-center"><small>Tous les actionnaires initiaux ont été ajoutés ?</small></p>
+</div>
+  <% if @firm.rounds.count > 1 %>
+        <%= button_to 'Définir les montants investis par les actionnaires', ownership_path(@firm, @round.id), method: 'get', class: "btn btn-primary add-ownership-button" %>
+    <% else %>
+        <%= button_to 'Définir la répartition du capital entre actionnaires', ownership_path(@firm, @round.id), method: 'get', class: "btn btn-primary add-ownership-button" %>
+    <% end %>
 <% end %>

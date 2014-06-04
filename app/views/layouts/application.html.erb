@@ -10,7 +10,9 @@
     <%= render 'layouts/navbar' %>
     <div class="container">
       <% flash.each do |name, msg| %>
-        <div class ="alert alert-<%=name%>"><%= content_tag :div, msg %></div>
+        <% msg.each do |alert_msg| %>
+          <div class ="alert alert-<%=name%>"><%= content_tag :div, alert_msg %></div>
+        <% end %>
       <% end %>
       <%= yield %>
     </div>

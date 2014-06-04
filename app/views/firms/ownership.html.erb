@@ -1,17 +1,70 @@
-<% if @round.initial_round %>
-  <p class="lead">Déterminer les parts des actionnaires de <%= @firm.name %> (pré-levée)</p>
-<% else %>
-  <p class="lead">Définir les montants investis par les nouveaux actionnaires de <%= @firm.name %> (post-levée)</p>
-<% end%>
-
 <div class="row">
-  <div class="col-sm-8">
+  <div class="col-sm-8 col-sm-offset-2">
+<% if @round.initial_round %>
+  <p class="lead">Déterminer les actions détenues par les actionnaires initiaux avant l'augmentation de capital</p>
+
+  <div class="row bs-wizard" style="border-bottom:0;">
+    <div class="col-xs-3 bs-wizard-step complete col-xs-offset-1">
+      <div class="text-center bs-wizard-stepnum">Step 1</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center">Ajouter une nouvelle société</div>
+    </div>
+
+    <div class="col-xs-3 bs-wizard-step active"><!-- complete -->
+      <div class="text-center bs-wizard-stepnum">Step 2</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center"><strong>Ajouter les actionnaires initiaux</strong></div>
+    </div>
+
+    <div class="col-xs-3 bs-wizard-step disabled"><!-- complete -->
+      <div class="text-center bs-wizard-stepnum">Step 3</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center">Ajouter les nouveaux actionnaires</div>
+    </div>
+  </div>
+
+  <hr>
+
+<% else %>
+  <h1>Définir les montants investis par les nouveaux actionnaires</h1>
+  <hr>
+
+    <div class="row bs-wizard" style="border-bottom:0;">
+    <div class="col-xs-3 bs-wizard-step complete col-xs-offset-1">
+      <div class="text-center bs-wizard-stepnum">Step 1</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center">Ajouter une nouvelle société</div>
+    </div>
+
+    <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
+      <div class="text-center bs-wizard-stepnum">Step 2</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center">Ajouter les actionnaires initiaux</div>
+    </div>
+
+    <div class="col-xs-3 bs-wizard-step active"><!-- complete -->
+      <div class="text-center bs-wizard-stepnum">Step 3</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center"><strong>Ajouter les nouveaux actionnaires</strong></div>
+    </div>
+  </div>
+
+  <hr>
+
+<% end%>
   <%= form_for :shareholder, url: update_ownership_path, method: 'post' do |f| %>
+    <div class="col-sm-8 col-sm-offset-2">
     <table class="table">
       <th>Prénom</th>
       <th>Nom</th>
       <% if @round.initial_round %>
-        <th>Nombre d'actions</th>
+        <th>Nombre d'actions détenues</th>
       <% else %>
         <th>Montant investi</th>
       <% end %>
@@ -34,7 +87,7 @@
                 <td><%= shareholder.last_name %></td>
                 <td>
                   <%= f.fields_for "#{shareholder.id}" do |inv_f| %>
-                    <div class="form-group col-sm-7">
+                    <div class="form-group col-sm-8">
                       <%= inv_f.number_field :amount, class: 'form-control', placeholder: "Montant en euros" %>
                     </div>
                     <%= inv_f.hidden_field :round_id, value: @round.id %>
@@ -46,7 +99,10 @@
         </tr>
       <% end %>
       </table>
-      <%= f.submit "Finaliser l'augmentation de capital", class: 'btn btn-primary' %>
+      <div class="col-sm-6 col-sm-offset-1">
+        <%= f.submit "Finaliser l'augmentation de capital", class: 'btn btn-primary' %>
+      </div>
+      </div>
     <% end %>
   </div>
 </div>

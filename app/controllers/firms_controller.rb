@@ -37,7 +37,7 @@ class FirmsController < ApplicationController
       @round.update_attribute(:initial_round, true)
       redirect_to new_shareholder_path(@firm.id, @round.id)
     else
-     flash[:error] = @firm.errors.full_messages
+     flash.now[:danger] = @firm.errors.full_messages
      render :new
    end
   end
@@ -89,8 +89,12 @@ class FirmsController < ApplicationController
       compute_new_value(@firm, @round)
       compute_new_shares(@firm, @round)
     end
+    if @firm.rounds.count > 1
+      redirect_to new_round_path(@firm)
+    else
+      redirect_to firm_path(@firm)
+    end
 
-    redirect_to firm_path
   end
 
   def setup_financial_infos(firm)

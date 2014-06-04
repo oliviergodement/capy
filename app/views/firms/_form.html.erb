@@ -39,6 +39,7 @@
       </div>
     </div>
     <br>
+    <br>
 
     <legend>2. Adresse du siège social</legend>
       <div class="row">
@@ -76,7 +77,8 @@
           </div>
         </div>
       </div>
-
+      <br>
+      <br>
 
     <legend>3. Informations bancaires</legend>
       <div class="row">
@@ -115,8 +117,9 @@
         </div>
       </div>
       <br>
+      <br>
     <%= f.hidden_field :user_id, value: current_user.id %>
-    <div class="row">
+    <div class="row last-row">
       <% if @firm.shareholders.any? %>
         <div class="col-sm-4">
           <%= f.submit "Modifier les infos des actionnaires existants", class: 'btn btn-primary border-bottom' %>

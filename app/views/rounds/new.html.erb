@@ -1,10 +1,55 @@
-<h1>Créer une nouvelle opération pour <%= @firm.name %></h1>
+<div class="col-sm-8 col-sm-offset-2">
+<h2>Créer une opération d'augmentation de capital pour <%= @firm.name %></h2>
+<hr>
+
+  <div class="row bs-wizard" style="border-bottom:0;">
+    <div class="col-xs-3 bs-wizard-step complete col-xs-offset-1">
+      <div class="text-center bs-wizard-stepnum">Step 1</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center">Ajouter une nouvelle société</div>
+    </div>
+
+    <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
+      <div class="text-center bs-wizard-stepnum">Step 2</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center">Ajouter les actionnaires initiaux</div>
+    </div>
+
+    <div class="col-xs-3 bs-wizard-step active"><!-- complete -->
+      <div class="text-center bs-wizard-stepnum">Step 3</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center"><strong>Ajouter les nouveaux actionnaires</strong></div>
+    </div>
+  </div>
+
+  <hr>
 
 <%= form_for @round, url: create_round_path, method: 'post' do |f| %>
-  <%= f.label :name, "Nom donné à l'opération d'augmentation de capital" %>
-  <%= f.text_field :name, class: "form-control" %>
-  <%= f.label :ownership_offered, "Part du capital ouverte" %>
-  <%= f.number_field :ownership_offered, class: "form-control" '%'%>
+  <div class="col-sm-8 col-sm-offset-1">
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :name, "Nom donné à l'opération", class: "control-label col-sm-4 text-right" %>
+        <div class="col-sm-8">
+          <%= f.text_field :name, class: "form-control", placeholder: "Nom donné à l'opération" %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :ownership_offered, "Part du capital ouverte", class: "control-label col-sm-4 text-right" %>
+        <div class="col-sm-6">
+          <%= f.text_field :ownership_offered, class: "form-control", placeholder: "Part du capital ouverte (%)" %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
   <%= f.hidden_field :firm_id, value: @firm.id %>
-  <%= f.submit %>
+  <%= f.submit "Créer l'opération", class: 'btn btn-primary border-bottom center-block' %>
+</div>
 <% end %>
+</div>

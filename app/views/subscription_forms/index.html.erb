@@ -6,8 +6,9 @@
   </div>
 </div>
 
-<table>
-  <th></th>
+<table class="table">
+  <th>Nouvel actionnaire</th>
+  <th>Télécharger le bon</th>
   <% @round.investments.each do |investment| %>
     <tr>
       <td><%= Shareholder.find(investment.shareholder_id).first_name %> <%= Shareholder.find(investment.shareholder_id).last_name %></td>

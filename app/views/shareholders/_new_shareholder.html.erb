@@ -1,33 +1,58 @@
 <div class="form-group">
   <%= form_for Shareholder.new, url: create_shareholder_path, method: 'post', remote: true do |f| %>
+    <% if @firm.rounds.count > 1 %>
+      <legend class="text-center">Ajouter un nouvel actionnaire</legend>
+    <% else %>
+      <legend class="text-center">Ajouter un actionnaire initial</legend>
+    <% end %>
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-6">
       <%= f.label :first_name, "Prénom" %>
       <%= f.text_field :first_name, class: "form-control", placeholder: 'Prénom' %>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-6">
       <%= f.label :last_name, "Nom" %>
       <%= f.text_field :last_name, class: "form-control", placeholder: 'Nom' %>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <%= f.label :nationality, "Nationalité" %>
         <%= f.text_field :nationality, class: "form-control", placeholder: 'Nationalité' %>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         <%= f.label :birth_date, "Date de naissance" %><br>
         <%= f.date_select :birth_date, start_year: 1930, class: "form-control" %>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-7">
         <%= f.label :address, "Adresse" %>
-        <%= f.text_area :address, class: "form-control", rows: "3", placeholder: 'Adresse postale' %>
+        <%= f.text_area :address, class: "form-control", rows: "4", placeholder: 'Adresse postale' %>
+      </div>
+      <div class="col-sm-5">
+        <div class="col-sm-12">
+          <%= f.label :city, "Ville" %><br>
+          <%= f.text_field :city, class: "form-control" %>
+        </div>
+        <div class="col-sm-12">
+          <%= f.label :country, "Pays" %><br>
+          <%= f.text_field :country, class: "form-control" %>
+        </div>
       </div>
     </div>
-    <%= f.submit "Ajouter un nouvel actionnaire", class: "btn btn-primary submit-button"%>
+    <br>
+    <br>
+    <div class="row last-row">
+      <div class="col-sm-6 col-sm-offset-3">
+          <% if @firm.rounds.count > 1 %>
+            <%= f.submit "Ajouter un nouvel actionnaire", class: "btn btn-primary submit-button"%>
+          <% else %>
+            <%= f.submit "Ajouter un actionnaire initial", class: "btn btn-primary submit-button"%>
+          <% end %>
+    </div>
+    </div>
   <% end %>
 </div>
