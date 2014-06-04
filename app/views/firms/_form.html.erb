@@ -1,56 +1,136 @@
-<%= form_for @firm do |f| %>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+  <%= form_for @firm do |f| %>
 
-  <h2>1. Informations de la société</h2>
-  <div class="form-group form-firm-name">
-    <%= f.label :name, "Nom de la société", class: "control-label" %>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
-  <div class="form-group form-firm-address">
-    <%= f.label :official_address, "Siège social" %>
-    <%= f.text_area :official_address, class: "form-control", rows: 3 %>
-  </div>
-  <div class="form-group form-firm-rcs">
-    <%= f.label :rcs, "RCS" %>
-    <%= f.text_field :rcs, class: "form-control" %>
-  </div>
-  <div class="form-group form-firm-court">
-    <%= f.label :court_service, "Greffe du" %>
-    <%= f.text_field :court_service, class: "form-control" %>
-  </div>
-  <div class="form-group form-firm-initial-capital">
-    <%= f.label :initial_capital, "Capital social (pré-levée)" %>
-    <%= f.text_field :initial_capital, class: "form-control" %>
-  </div>
-
-
-  <h2>2. Informations bancaires</h2>
-  <div class="form-group form-firm-bank-name">
-  <%= f.label :bank_name, "Nom de la banque" %>
-  <%= f.text_field :bank_name, class: "form-control" %>
-  </div>
-  <div class="form-group form-firm-bank-agency">
-  <%= f.label :bank_agency, "Nom de l'agence bancaire" %>
-  <%= f.text_field :bank_agency, class: "form-control" %>
-  </div>
-  <div class="form-group form-firm-bank-address">
-  <%= f.label :bank_agency_address, "Adresse de l'agence" %>
-  <%= f.text_field :bank_agency_address, class: "form-control" %>
-  </div>
-  <div class="form-group form-firm-bank-account">
-  <%= f.label :bank_account, "Numéro de compte de la société" %>
-  <%= f.text_field :bank_account, class: "form-control" %>
-  </div>
-  <%= f.hidden_field :user_id, value: current_user.id %>
-  <% if @firm.shareholders.any? %>
+    <legend>1. Informations de la société</legend>
     <div class="row">
-      <div class="col-sm-4">
-        <%= f.submit "Modifier les infos des actionnaires existants", class: 'btn btn-primary border-bottom' %>
-      </div>
-      <div class="col-sm-4 col-sm-offset-1">
-        <%= button_to "Définir la répartition du capital", ownership_path(@firm, @round), method: 'get', class: 'btn btn-primary border-bottom' %>
+      <div class="form-group">
+        <%= f.label :name, "Nom de la société", class: "control-label col-sm-3 text-right" %>
+        <div class="col-sm-9">
+          <%= f.text_field :name, class: "form-control", placeholder: "Nom de la société" %>
+        </div>
       </div>
     </div>
-  <% else %>
-    <%= f.submit "Ajouter les actionnaires pré-levée", class: 'btn btn-primary border-bottom' %>
+    <br>
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :rcs, "Numéro RCS", class: "control-label col-sm-3 text-right" %>
+        <div class="col-sm-4">
+          <%= f.text_field :rcs, class: "form-control", placeholder: "Numéro RCS" %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :court_service, "Greffe", class: "control-label col-sm-3 text-right" %>
+        <div class="col-sm-9">
+          <%= f.text_field :court_service, class: "form-control", placeholder: "Ville du greffe d'immatriculation" %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :initial_capital, "Capital social initial", class: "control-label col-sm-3 text-right" %>
+        <div class="col-sm-4">
+          <%= f.number_field :initial_capital, class: "form-control", placeholder: "Capital social (€)" %>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <legend>2. Adresse du siège social</legend>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label :official_address, "Adresse", class: "control-label col-sm-3 text-right" %>
+          <div class="col-sm-9">
+            <%= f.text_area :official_address, class: "form-control", placeholder: "Adresse (numéro et nom de la voie)" %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label :city, "Ville", class: "control-label col-sm-3 text-right" %>
+          <div class="col-sm-4">
+            <%= f.text_field :city, class: "form-control", placeholder: "Ville" %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label :postal_code, "Code postal", class: "control-label col-sm-3 text-right" %>
+          <div class="col-sm-4">
+            <%= f.text_field :postal_code, class: "form-control", placeholder: "Code postal" %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label :country, "Pays", class: "control-label col-sm-3 text-right" %>
+          <div class="col-sm-4">
+            <%= f.text_field :country, class: "form-control", placeholder: "Pays" %>
+          </div>
+        </div>
+      </div>
+
+
+    <legend>3. Informations bancaires</legend>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label :bank_name, "Nom de la banque", class: "control-label col-sm-3 text-right" %>
+          <div class="col-sm-6">
+            <%= f.text_field :bank_name, class: "form-control", placeholder: "Nom de la banque" %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label :bank_agency, "Nom de l'agence bancaire", class: "control-label col-sm-3 text-right" %>
+          <div class="col-sm-9">
+            <%= f.text_field :bank_agency, class: "form-control", placeholder: "Nom de l'agence bancaire" %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label :bank_agency_address, "Nom de l'agence bancaire", class: "control-label col-sm-3 text-right" %>
+          <div class="col-sm-9">
+            <%= f.text_area :bank_agency_address, class: "form-control", placeholder: "Adresse complète de l'agence bancaire (voie, ville, code postal)" %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label :bank_account, "Compte bancaire", class: "control-label col-sm-3 text-right" %>
+          <div class="col-sm-9">
+            <%= f.text_field :bank_account, class: "form-control", placeholder: "Numéro de compte bancaire de la société" %>
+          </div>
+        </div>
+      </div>
+      <br>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <div class="row">
+      <% if @firm.shareholders.any? %>
+        <div class="col-sm-4">
+          <%= f.submit "Modifier les infos des actionnaires existants", class: 'btn btn-primary border-bottom' %>
+        </div>
+        <div class="col-sm-4 col-sm-offset-1">
+          <%= button_to "Définir la répartition du capital", ownership_path(@firm, @round), method: 'get', class: 'btn btn-primary border-bottom' %>
+        </div>
+      <% else %>
+        <div class="col-sm-6 col-sm-offset-3">
+          <%= f.submit "Ajouter les actionnaires pré-levée", class: 'btn btn-primary border-bottom' %>
+        </div>
+      <% end %>
   <% end %>
-<% end %>
+  </div>
+
+  </div>
+</div>

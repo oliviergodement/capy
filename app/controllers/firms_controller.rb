@@ -126,7 +126,7 @@ class FirmsController < ApplicationController
     def firm_params
       params.require(:firm).permit(:name, :official_address, :rcs, :court_service,
              :bank_name, :bank_agency, :bank_agency_address, :bank_account, :valuation,
-             :share_price, :initial_capital, :shares, :user_id)
+             :share_price, :initial_capital, :shares, :user_id, :city, :postal_code, :country)
     end
 
     def find_firm

@@ -13,3 +13,16 @@
  *= require bootstrap
  *= require_self
  */
+
+html, body {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+label {
+  font-weight:bold !important;
+}
+
