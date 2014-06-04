@@ -5,8 +5,10 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Liste des sociétés", firms_path %></li>
-            <li><%= link_to "Ajouter une société", new_firm_path %></li>
+            <% if user_signed_in? %>
+              <li><%= link_to "Liste des sociétés", firms_path %></li>
+              <li><%= link_to "Ajouter une société", new_firm_path %></li>
+            <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>

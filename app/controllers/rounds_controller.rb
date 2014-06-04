@@ -1,6 +1,7 @@
 class RoundsController < ApplicationController
 
   before_action :find_firm, only: [:new, :create, :show, :index]
+  before_action :authenticate_user!
 
   def new
     @round = Round.new

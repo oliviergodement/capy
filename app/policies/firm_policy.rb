@@ -22,4 +22,8 @@ class FirmPolicy < ApplicationPolicy
     record.user_id == user.id
   end
 
+  def cap_table?
+    record.user_id == user.id
+  end
+
 end

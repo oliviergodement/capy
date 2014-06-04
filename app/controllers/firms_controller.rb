@@ -18,6 +18,7 @@ class FirmsController < ApplicationController
   end
 
   def cap_table
+    authorize @firm
     respond_to do |format|
       format.xls
       format.html

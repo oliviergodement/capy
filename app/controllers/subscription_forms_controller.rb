@@ -5,13 +5,17 @@ include RTF
 
 class SubscriptionFormsController < ApplicationController
 
+  before_action :authenticate_user!
+
   def index
     @firm = Firm.find(params[:id])
+    authorize @firm
     @round = Round.find(params[:round_id])
   end
 
   def show
     @firm = Firm.find(params[:id])
+    authorize @firm
     @round = Round.find(params[:round_id])
     @investment = Investment.find(params[:investment_id])
     @shareholder = Shareholder.find(params[:shareholder_id])
@@ -172,6 +176,7 @@ class SubscriptionFormsController < ApplicationController
     file_name = "#{Rails.root}/bon_souscription_#{@firm.name.strip}_#{@shareholder.last_name}.doc"
     File.open(file_name, 'w') {|file| file.write(form.to_rtf)}
     send_file file_name
+    delete file_name
 
   end
 
