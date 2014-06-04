@@ -1,3 +1,4 @@
+<div class="row">
 <h1>Télécharger les bons de souscription</h1>
 
 <div class="panel panel-default">
@@ -6,13 +7,16 @@
   </div>
 </div>
 
-<table class="table">
-  <th>Nouvel actionnaire</th>
-  <th>Télécharger le bon</th>
-  <% @round.investments.each do |investment| %>
-    <tr>
-      <td><%= Shareholder.find(investment.shareholder_id).first_name %> <%= Shareholder.find(investment.shareholder_id).last_name %></td>
-      <td><%= link_to "Télécharger", subscription_form_path(@firm.id, @round.id, Shareholder.find(investment.shareholder_id).id, investment.id) %></td>
-    </tr>
-  <% end %>
-</table>
+  <div class="col-sm-8 col-sm-offset-2">
+    <table class="table table-bordered text-center">
+      <th class="text-center">Nouvel actionnaire</th>
+      <th class="text-center">Télécharger le bon au format Word</th>
+      <% @round.investments.each do |investment| %>
+        <tr>
+          <td><%= Shareholder.find(investment.shareholder_id).first_name %> <%= Shareholder.find(investment.shareholder_id).last_name %></td>
+          <td><%= link_to "Télécharger", subscription_form_path(@firm.id, @round.id, Shareholder.find(investment.shareholder_id).id, investment.id) %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
