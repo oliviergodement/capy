@@ -31,11 +31,11 @@
           <td>
             <%= button_to "Voir les bulletins", subscription_forms_path(firm, Round.where(firm_id: firm.id).last), method: 'get', class: "btn btn-sm btn-primary center-block" %>
           </td>
-          <td><%= button_to "Voir les détails de l'opération", show_round_path(firm, Round.where(firm_id: firm.id).last), method: 'get', class: "btn btn-sm btn-success center-block"%></td>
+          <td></td>
         <% else %>
+          <td colspan="2"><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-success center-block"%>
           <td></td>
-          <td></td>
-          <td><%= button_to "Démarrer une augmentation de capital", new_round_path(firm), method: 'get', class: "btn btn-sm btn-success center-block"%>
+
         <% end %>
         </td>
       </tr>
