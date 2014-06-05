@@ -1,5 +1,6 @@
-$(function(){
-  $('body').on('click', '.add-shareholder', function(){
-    $('.new-shareholder').display();
+
+  $(function(){
+    $('body').on('click', '.add-shareholder', function(){
+      $('.new-shareholder').display();
+    });
   });
-});

@@ -5,10 +5,12 @@
     <p class="lead">Tableau de capitalisation de <%= @firm.name %></p>
   </div>
   <div class="col-sm-3">
-    <%= button_to "Télécharger au format PDF", cap_table_path(format: "pdf"), method: 'get', class: 'btn btn-success' %>
+    <div class="po-markup">
+      <a href="" + <%= cap_table_path(format: "pdf")%> class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Télécharger au format PDF</a>
+    </div>
   </div>
   <div class="col-sm-3 pull-right">
-    <%= button_to "Télécharger au format Excel", cap_table_path(format: "xls"), method: 'get', class: 'btn btn-success' %>
+    <a href="" + <%= cap_table_path(format: "xls")%> class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Télécharger au format Excel</a>
   </div>
 </div>
 

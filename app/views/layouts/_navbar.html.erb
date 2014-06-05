@@ -7,16 +7,18 @@
           <ul class="nav navbar-nav">
             <% if user_signed_in? %>
               <li><%= link_to "Liste des sociétés", firms_path %></li>
-              <li><%= link_to "Ajouter une société", new_firm_path %></li>
+              <li><a href="" + <%=new_firm_path%>><span class="glyphicon glyphicon-plus"></span> Ajouter une société</a></li>
             <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
-              <li><%= link_to current_user.email, firms_path %></li>
-              <li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+            <li>
+              <a href="" + <%= firms_path %>><span class="glyphicon glyphicon-user"></span> <%= current_user.email%></a>
+            </li>
+              <li><%= link_to "Se déconnecter", destroy_user_session_path, method: :delete %></li>
             <% else %>
-              <li><%=link_to 'Login', user_session_path%></li>
-              <li><%=link_to 'Sign up', new_user_registration_path%></li>
+              <li><%=link_to 'Se connecter', user_session_path%></li>
+              <li><%=link_to 'Inscription', new_user_registration_path%></li>
             <% end %>
           </ul>
         </div>
