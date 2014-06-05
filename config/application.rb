@@ -21,7 +21,7 @@ module Capy
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :fr
 
-    config.middleware.use PDFKit::Middleware
+    config.middleware.use PDFKit::Middleware, print_media_type: true, orientation: 'Landscape'
 
   end
 end

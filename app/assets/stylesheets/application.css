@@ -70,3 +70,33 @@ label {
 .bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
 /*END Form Wizard*/
+
+@media print {
+  body { background-color: #FFF; }
+  #container {
+        width: 1400px;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+  nav {
+    display: none;
+  }
+  .btn{
+    display:none;
+  }
+
+  p.lead {
+    font-size: 2em;
+  }
+  tr {
+    width: 1300px;
+  }
+  table {
+    width: 120%;
+  }
+  #line_items {
+    page-break-before: always;
+  }
+}

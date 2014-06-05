@@ -4,6 +4,9 @@
   <div class="col-sm-6">
     <p class="lead">Tableau de capitalisation de <%= @firm.name %></p>
   </div>
+  <div class="col-sm-3">
+    <%= button_to "Télécharger au format PDF", cap_table_path(format: "pdf"), method: 'get', class: 'btn btn-success' %>
+  </div>
   <div class="col-sm-3 pull-right">
     <%= button_to "Télécharger au format Excel", cap_table_path(format: "xls"), method: 'get', class: 'btn btn-success' %>
   </div>
@@ -72,7 +75,7 @@
     </tr>
 </table>
 
-<div class="row">
+<div class="row" id="line_items">
    <div class="col-sm-4">
       <div class="panel panel-default">
         <div class="panel-heading">
