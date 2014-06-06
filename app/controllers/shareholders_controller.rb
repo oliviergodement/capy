@@ -49,7 +49,7 @@ class ShareholdersController < ApplicationController
 
     def shareholder_params
       params.require(:shareholder).permit(:first_name, :last_name, :birth_date, :email, :address,
-                    :nationality, :initial_investor)
+                    :nationality, :initial_investor, :city, :country, :postal_code)
     end
 
 

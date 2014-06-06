@@ -30,7 +30,9 @@
     <div class="row">
       <div class="col-sm-7">
         <%= f.label :address, "Adresse" %>
-        <%= f.text_area :address, class: "form-control", rows: "4", placeholder: 'Adresse postale' %>
+        <%= f.text_area :address, class: "form-control", rows: "3", placeholder: 'Adresse postale' %>
+        <%= f.label :postal_code, "Code postal" %>
+        <%= f.text_field :postal_code, class: "form-control", placeholder: 'Code postal' %>
       </div>
       <div class="col-sm-5">
         <div class="col-sm-12">

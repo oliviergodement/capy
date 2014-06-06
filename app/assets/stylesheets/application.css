@@ -99,8 +99,12 @@ footer {
   footer {
     display: none;
   }
-  .btn{
+  .btn {
     display:none;
+  }
+
+  .doc-link {
+    display: none;
   }
 
   p.lead {

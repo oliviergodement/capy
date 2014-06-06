@@ -13,7 +13,13 @@
     <a href=<%= cap_table_path(format: "xls")%> class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Télécharger au format Excel</a>
   </div>
 </div>
-
+<div class="row doc-link">
+  <div class="col-sm-12">
+    <%= link_to "Revenir aux documents", show_round_path(@firm.id, @round.id) %>
+  </div>
+</div>
+<br>
+<br>
 <table class="table table-hover table-bordered table-condensed">
   <tr class="info">
     <th>Nom</th>

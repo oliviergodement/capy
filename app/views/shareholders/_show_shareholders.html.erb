@@ -19,12 +19,15 @@
   <%end%>
   </table>
   <hr>
-<div class="col-sm-8 col-sm-offset-2">
-  <p class="text-center"><small>Tous les actionnaires initiaux ont été ajoutés ?</small></p>
-</div>
   <% if @firm.rounds.count > 1 %>
-        <%= button_to 'Définir les montants investis par les actionnaires', ownership_path(@firm, @round.id), method: 'get', class: "btn btn-primary add-ownership-button" %>
-    <% else %>
-        <%= button_to 'Définir la répartition du capital entre actionnaires', ownership_path(@firm, @round.id), method: 'get', class: "btn btn-primary add-ownership-button" %>
-    <% end %>
+      <div class="col-sm-8 col-sm-offset-2">
+        <p class="text-center"><small>Tous les nouveaux actionnaires ont été ajoutés ?</small></p>
+      </div>
+      <%= button_to 'Définir les montants investis par les actionnaires', ownership_path(@firm, @round.id), method: 'get', class: "btn btn-success add-ownership-button center-block" %>
+  <% else %>
+      <div class="col-sm-8 col-sm-offset-2">
+        <p class="text-center"><small>Tous les actionnaires initiaux ont été ajoutés ?</small></p>
+      </div>
+      <%= button_to 'Définir la répartition du capital (pré-levée)', ownership_path(@firm, @round.id), method: 'get', class: "btn btn-success add-ownership-button center-block" %>
+  <% end %>
 <% end %>

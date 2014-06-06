@@ -19,6 +19,7 @@ class FirmsController < ApplicationController
 
   def cap_table
     authorize @firm
+    @round = @firm.rounds.last
     respond_to do |format|
       format.xls
       format.html

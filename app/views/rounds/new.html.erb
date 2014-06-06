@@ -1,38 +1,47 @@
-<div class="col-sm-8 col-sm-offset-2">
 <h2>Créer une opération d'augmentation de capital pour <%= @firm.name %></h2>
 <hr>
 
-   <div class="row bs-wizard" style="border-bottom:0;">
-    <div class="col-xs-3 bs-wizard-step complete">
-      <div class="text-center bs-wizard-stepnum">Etape 1</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center">Créer la société</div>
-    </div>
+      <div class="row bs-wizard" style="border-bottom:0;">
 
-    <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
-      <div class="text-center bs-wizard-stepnum">Etape 2</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center">Ajouter les actionnaires initiaux</div>
-    </div>
+      <div class="col-xs-2 col-xs-offset-1 bs-wizard-step complete">
+        <div class="text-center bs-wizard-stepnum">Etape 1</div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center">Ajouter une nouvelle société</div>
+      </div>
 
-    <div class="col-xs-3 bs-wizard-step active"><!-- complete -->
-      <div class="text-center bs-wizard-stepnum">Etape 3</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center">Ajouter les nouveaux actionnaires</div>
-    </div>
+      <div class="col-xs-2 bs-wizard-step complete"><!-- complete -->
+        <div class="text-center bs-wizard-stepnum">Etape 2</div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center">Ajouter les actionnaires initiaux</div>
+      </div>
 
-      <div class="col-xs-3 bs-wizard-step disabled"><!-- complete -->
+      <div class="col-xs-2 bs-wizard-step complete"><!-- complete -->
+        <div class="text-center bs-wizard-stepnum">Etape 3</div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center">Définir la répartition du capital pré-levée</div>
+      </div>
+
+      <div class="col-xs-2 bs-wizard-step active"><!-- complete -->
         <div class="text-center bs-wizard-stepnum">Etape 4</div>
         <div class="progress"><div class="progress-bar"></div></div>
         <a href="#" class="bs-wizard-dot"></a>
-        <div class="bs-wizard-info text-center">Télécharger les documents</div>
+        <div class="bs-wizard-info text-center"><strong>Ajouter les nouveaux actionnaires</strong></div>
       </div>
-  </div>
+
+      <div class="col-xs-2 bs-wizard-step disabled"><!-- complete -->
+        <div class="text-center bs-wizard-stepnum">Etape 5</div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center">Définir les montants investis par les nouveaux actionnaires</div>
+      </div>
+    </div>
 
   <hr>
+  <div class="row">
+<div class="col-sm-8 col-sm-offset-2">
 
 <%= form_for @round, url: create_round_path, method: 'post' do |f| %>
   <div class="col-sm-8 col-sm-offset-1">
@@ -59,4 +68,5 @@
   <%= f.submit "Créer l'opération", class: 'btn btn-primary border-bottom center-block' %>
 </div>
 <% end %>
+</div>
 </div>
