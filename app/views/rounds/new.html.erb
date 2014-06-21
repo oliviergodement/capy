@@ -56,6 +56,15 @@
     <br>
     <div class="row">
       <div class="form-group">
+        <%= f.label :name, "Date de la décision", class: "control-label col-sm-4 text-right" %>
+        <div class="col-sm-8">
+          <%= f.date_field :date, class: "form-control", placeholder: "Date de la décision"%>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="form-group">
         <%= f.label :ownership_offered, "Part du capital ouverte", class: "control-label col-sm-4 text-right" %>
         <div class="col-sm-6">
           <%= f.text_field :ownership_offered, class: "form-control", placeholder: "Part du capital ouverte (%)" %>

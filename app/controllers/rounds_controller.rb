@@ -37,7 +37,7 @@ class RoundsController < ApplicationController
     end
 
     def round_params
-      params.require(:round).permit(:name, :ownership_offered, :firm_id)
+      params.require(:round).permit(:name, :ownership_offered, :firm_id, :date)
     end
 
     def set_amount(id)
