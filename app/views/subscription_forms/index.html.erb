@@ -3,14 +3,14 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    Les bons de souscription sont au format ".DOC". Ils peuvent être ouverts et modifiés avec Microsoft Word.
+    Les bons de souscription sont au format ".rtf". Ils peuvent être ouverts et modifiés avec Microsoft Word ou avec tout autre éditeur de texte.
   </div>
 </div>
 
   <div class="col-sm-8 col-sm-offset-2">
     <table class="table table-bordered text-center">
       <th class="text-center">Nouvel actionnaire</th>
-      <th class="text-center">Télécharger le bon au format Word</th>
+      <th class="text-center">Télécharger le bon</th>
       <% @round.investments.each do |investment| %>
         <tr>
           <td><%= Shareholder.find(investment.shareholder_id).first_name %> <%= Shareholder.find(investment.shareholder_id).last_name %></td>

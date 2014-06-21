@@ -21,7 +21,7 @@ class SubscriptionFormsController < ApplicationController
     @investment = Investment.find(params[:investment_id])
     @shareholder = Shareholder.find(params[:shareholder_id])
 
-    file_name = "bon_souscription_#{@firm.name.gsub(/\s+/, "")}_#{@shareholder.last_name}.doc"
+    file_name = "bon_souscription_#{@firm.name.gsub(/\s+/, "")}_#{@shareholder.last_name}.rtf"
     send_data generate_subscription_form(@shareholder), filename: file_name
   end
 
@@ -35,7 +35,7 @@ class SubscriptionFormsController < ApplicationController
     Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
       i = 1
       @round.shareholders.each do |shareholder|
-        file_name = "bon_#{@firm.name.gsub(/\s+/, "")}_#{shareholder.last_name}_#{i}.doc"
+        file_name = "bon_#{@firm.name.gsub(/\s+/, "")}_#{shareholder.last_name}_#{i}.rtf"
         File.open(file_name, 'w') do |file|
           file.write(generate_subscription_form(shareholder))
         end
@@ -71,7 +71,7 @@ class SubscriptionFormsController < ApplicationController
 
     form.paragraph(styles['HEADER-CENTER']) do |p|
        p.apply(styles['HEADER']) do |s|
-          s << @firm.name.upcase
+          s << @firm.name
           s.line_break
           s << "Société par actions simplifiée au capital de #{@firm.initial_capital.round(2)} euros"
           s.line_break

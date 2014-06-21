@@ -68,7 +68,7 @@
     <% end %>
     <tr class="active">
       <td><strong>Total</strong></td>
-      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: true).map(&:investments).sum{|investment| investment[0].amount}, delimiter: " ", separator: ",", locale: :fr)%> €</td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: true).map(&:investments).sum{|investment| investment[0].amount}.round(2), delimiter: " ", separator: ",", locale: :fr)%> €</td>
       <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: true).sum('shares'), delimiter: " ", separator: ",", locale: :fr)%></td>
       <td>100.0 %</td>
       <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: false).map(&:investments).sum{|investment| investment[0].amount}, delimiter: " ", separator: ",", locale: :fr)%> €</td>
