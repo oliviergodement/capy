@@ -96,7 +96,7 @@ class SubscriptionFormsController < ApplicationController
         s.line_break
         s.line_break
       end
-       p << "Aux termes d’une décision collective des Associés de la Société en date du  DATE, il a été décidé d’augmenter le capital "
+       p << "Aux termes d’une décision collective des Associés de la Société en date du #{@round.date.strftime("%d %B %Y")}, il a été décidé d’augmenter le capital "
        p << "social de #{@round.real_amount_raised} euros pour le porter de "
        p << "#{@firm.initial_capital} euros à #{@firm.initial_capital + @round.real_amount_raised} euros "
        p << "par l'émission de #{@firm.shareholders.sum('corrected_shares')} actions ordinaires nouvelles de "
