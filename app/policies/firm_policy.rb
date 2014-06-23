@@ -30,4 +30,8 @@ class FirmPolicy < ApplicationPolicy
     record.user_id == user.id
   end
 
+  def zip_form?
+    record.user_id == user.id
+  end
+
 end

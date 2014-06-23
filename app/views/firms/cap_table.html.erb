@@ -68,7 +68,7 @@
     <% end %>
     <tr class="active">
       <td><strong>Total</strong></td>
-      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: true).map(&:investments).sum{|investment| investment[0].amount}, delimiter: " ", separator: ",", locale: :fr)%> €</td>
+      <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: true).map(&:investments).sum{|investment| investment[0].amount}.round(2), delimiter: " ", separator: ",", locale: :fr)%> €</td>
       <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: true).sum('shares'), delimiter: " ", separator: ",", locale: :fr)%></td>
       <td>100.0 %</td>
       <td><%= number_with_delimiter(@firm.shareholders.where(initial_investor: false).map(&:investments).sum{|investment| investment[0].amount}, delimiter: " ", separator: ",", locale: :fr)%> €</td>
@@ -97,6 +97,7 @@
           <p>Valorisation pre-money : <%= number_with_delimiter(@firm.pre_valuation.round(2), delimiter: " ", separator: ",", locale: :fr) %> €</p>
           <p>Valorisation post-money : <%= number_with_delimiter(@firm.post_valuation.round(2), delimiter: " ", separator: ",", locale: :fr) %> €</p>
           <p>Part réelle du capital social ouvert aux nouveaux actionnaires : <%=((@firm.shareholders.where(initial_investor: false).sum('corrected_shares').to_f/@firm.shares.to_f)*100).round(2)%> %</p>
+          <p>Date de la décision des associés : <%= @firm.rounds.last.date.strftime("%d %B %Y") %></p>
         </div>
       </div>
     </div>

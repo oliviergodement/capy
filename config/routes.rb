@@ -23,5 +23,5 @@ Rails.application.routes.draw do
 
   get 'firms/:id/round/:round_id/subscription_forms' => 'subscription_forms#index', as: :subscription_forms
   get 'firms/:id/round/:round_id/subscription_form/:shareholder_id/:investment_id' => 'subscription_forms#show', as: :subscription_form
-
+  get 'firms/:id/round/:round_id/subscription_form/zip' => 'subscription_forms#zip_form', as: :zip_form
 end

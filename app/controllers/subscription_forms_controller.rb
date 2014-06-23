@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'rtf'
+require 'zip'
 
 include RTF
 
@@ -19,10 +20,36 @@ class SubscriptionFormsController < ApplicationController
     @round = Round.find(params[:round_id])
     @investment = Investment.find(params[:investment_id])
     @shareholder = Shareholder.find(params[:shareholder_id])
-    generate_subscription_form
+
+    file_name = "bon_souscription_#{@firm.name.gsub(/\s+/, "")}_#{@shareholder.last_name}.rtf"
+    send_data generate_subscription_form(@shareholder), filename: file_name
   end
 
-  def generate_subscription_form
+  def zip_form
+    @firm = Firm.find(params[:id])
+    authorize @firm
+    @round = Round.find(params[:round_id])
+
+    zipfile_name = "bulletins_#{@firm.name.gsub(/\s+/, "").downcase}.zip"
+
+    Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
+      i = 1
+      @round.shareholders.each do |shareholder|
+        file_name = "bon_#{@firm.name.gsub(/\s+/, "")}_#{shareholder.last_name}_#{i}.rtf"
+        File.open(file_name, 'w') do |file|
+          file.write(generate_subscription_form(shareholder))
+        end
+        zipfile.add(file_name, file_name)
+        i += 1
+      end
+      send_data zipfile_name, filename: zipfile_name
+      # TODO
+      # - sends empty zip file
+      # - doesnt delete temp files
+    end
+  end
+
+  def generate_subscription_form(shareholder)
     styles = {}
     styles['HEADER'] = CharacterStyle.new
     styles['HEADER'].bold      = true
@@ -44,7 +71,7 @@ class SubscriptionFormsController < ApplicationController
 
     form.paragraph(styles['HEADER-CENTER']) do |p|
        p.apply(styles['HEADER']) do |s|
-          s << @firm.name.upcase
+          s << @firm.name
           s.line_break
           s << "Société par actions simplifiée au capital de #{@firm.initial_capital.round(2)} euros"
           s.line_break
@@ -69,7 +96,7 @@ class SubscriptionFormsController < ApplicationController
         s.line_break
         s.line_break
       end
-       p << "Aux termes d’une décision collective des Associés de la Société en date du  DATE, il a été décidé d’augmenter le capital "
+       p << "Aux termes d’une décision collective des Associés de la Société en date du #{@round.date.strftime("%d %B %Y")}, il a été décidé d’augmenter le capital "
        p << "social de #{@round.real_amount_raised} euros pour le porter de "
        p << "#{@firm.initial_capital} euros à #{@firm.initial_capital + @round.real_amount_raised} euros "
        p << "par l'émission de #{@firm.shareholders.sum('corrected_shares')} actions ordinaires nouvelles de "
@@ -80,8 +107,8 @@ class SubscriptionFormsController < ApplicationController
     end
 
     form.paragraph(styles['INDENTED']) do |p|
-      @firm.shareholders.where(initial_investor: false).each do |shareholder|
-        p << "- à hauteur de #{shareholder.investments.last.real_amount} €, soit #{shareholder.corrected_shares} actions ordinaires nouvelles de la Société, à #{shareholder.first_name} #{shareholder.last_name}, né(e) le #{shareholder.birth_date}, de nationalité #{shareholder.nationality} et résidant à #{shareholder.address}"
+      @firm.shareholders.where(initial_investor: false).each do |investor|
+        p << "- à hauteur de #{investor.investments.last.real_amount} €, soit #{investor.corrected_shares} actions ordinaires nouvelles de la Société, à #{investor.first_name} #{investor.last_name}, né(e) le #{investor.birth_date}, de nationalité #{investor.nationality} et résidant à #{investor.address}"
         p.line_break
         p.line_break
       end
@@ -124,10 +151,10 @@ class SubscriptionFormsController < ApplicationController
        p << "Je, soussigné[e] ;"
        p.line_break
        p.line_break
-       p << "#{@shareholder.first_name} #{@shareholder.last_name}, né[e] le #{@shareholder.birth_date} à REMPLIR, et résidant à #{@shareholder.address} ;"
+       p << "#{shareholder.first_name} #{shareholder.last_name}, né[e] le #{shareholder.birth_date} à REMPLIR, et résidant à #{shareholder.address} ;"
        p.line_break
        p.line_break
-       p << "bénéficiaire, à la suite de la suppression à son profit du droit préférentiel de souscription des Associés, du droit à la souscription de #{@shareholder.corrected_shares} actions ordinaires nouvelles de la Société ;"
+       p << "bénéficiaire, à la suite de la suppression à son profit du droit préférentiel de souscription des Associés, du droit à la souscription de #{shareholder.corrected_shares} actions ordinaires nouvelles de la Société ;"
        p.line_break
        p.line_break
        p << "après avoir pris connaissance des statuts de la Société, des conditions et des modalités de l’émission de #{@round.shares_issued} actions ordinaires nouvelles composant l’intégralité de l’augmentation de capital en numéraire sus-énoncée ;"
@@ -141,10 +168,10 @@ class SubscriptionFormsController < ApplicationController
     end
 
     form.paragraph(styles['INDENTED']) do |p|
-      p << "− souscrire à #{@shareholder.corrected_shares} actions ordinaires nouvelles de la Société de #{@firm.nominal_value.round(2)} € de valeur nominale chacune, soit la totalité de la quote-part m’étant réservée, émises au prix de souscription d’environ #{@firm.real_value.round(2)} € chacune (prime d’émission incluse), soit un prix total de #{(@shareholder.corrected_shares * @firm.real_value).round(2)} € ;"
+      p << "− souscrire à #{shareholder.corrected_shares} actions ordinaires nouvelles de la Société de #{@firm.nominal_value.round(2)} € de valeur nominale chacune, soit la totalité de la quote-part m’étant réservée, émises au prix de souscription d’environ #{@firm.real_value.round(2)} € chacune (prime d’émission incluse), soit un prix total de #{(shareholder.corrected_shares * @firm.real_value).round(2)} € ;"
       p.line_break
       p.line_break
-      p << "− s’engager à libérer en numéraire lors de la souscription le montant correspondant à l’intégralité des actions souscrites, soit la somme de #{(@shareholder.corrected_shares * @firm.real_value).round(2)} € ;"
+      p << "− s’engager à libérer en numéraire lors de la souscription le montant correspondant à l’intégralité des actions souscrites, soit la somme de #{(shareholder.corrected_shares * @firm.real_value).round(2)} € ;"
       p.line_break
       p.line_break
     end
@@ -169,14 +196,10 @@ class SubscriptionFormsController < ApplicationController
       p.line_break
       p << "Veuillez faire précéder votre signature de la mention manuscrite suivante :"
       p.line_break
-      p << "« Bon pour souscription à #{@shareholder.corrected_shares} actions ordinaires nouvelles de la Société de #{@firm.nominal_value.round(2)} € de valeur nominale chacune »"
+      p << "« Bon pour souscription à #{shareholder.corrected_shares} actions ordinaires nouvelles de la Société de #{@firm.nominal_value.round(2)} € de valeur nominale chacune »"
     end
 
-
-    file_name = "bon_souscription_#{@firm.name.strip}_#{@shareholder.last_name}.doc"
-    send_data form.to_rtf, filename: file_name
-
-
+    form.to_rtf
   end
 
 end
