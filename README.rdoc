@@ -4,4 +4,6 @@ Legal documents generation SaaS.
 
 * Ruby 2.1.1, Rails 4.1.1 and PostgreSQL
 
-* Gems used for documents: pdfkit, clbustos-rtf, rubyzip
+* Gems used for documents generation: pdfkit, clbustos-rtf, rubyzip
+
+* Other gems: devise, pundit, activeadmin
