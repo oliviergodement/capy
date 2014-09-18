@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'presentation/show'
+
   root 'home#index', as: :home
+  get 'presentation' => 'presentation#show', as: :presentation
 
   devise_for :users
   ActiveAdmin.routes(self)

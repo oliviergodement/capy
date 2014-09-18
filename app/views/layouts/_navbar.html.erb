@@ -5,6 +5,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
+              <li><%= link_to "Comment ça marche ?", presentation_path %></li>
             <% if user_signed_in? %>
               <li><%= link_to "Liste des sociétés", firms_path %></li>
               <li><a href=<%=new_firm_path%>><span class="glyphicon glyphicon-plus"></span> Ajouter une société</a></li>
